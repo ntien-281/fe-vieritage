@@ -1,12 +1,12 @@
 import { PaperProvider } from 'react-native-paper';
-import App from './src/App';
+import { Text } from 'react-native'
 
-const App = () => {
+const Home = () => {
   return (
     <PaperProvider>
-      <App />
+      <Text>app/index</Text>
     </PaperProvider>
   );
 }
 
-export default App;
+export default Home;
