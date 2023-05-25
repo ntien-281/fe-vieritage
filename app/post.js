@@ -1,9 +1,31 @@
-import { Text } from 'react-native';
-
+import { Text, SafeAreaView, ScrollView, View, Image } from "react-native";
+import { Stack } from "expo-router";
+import { NotifiBtn, CreatePost, Search, Story, PostList } from "../components";
 const Post = () => {
   return (
-    <Text>Post screen (./app/post.js)</Text>
-  )
-}
+    <SafeAreaView>
+      <Stack.Screen
+        options={{
+          headerShadowVisible: false,
+          headerLeft: () => <CreatePost />,
+          headerRight: () => (
+            <>
+              <Search />
+              <NotifiBtn />
+            </>
+          ),
+          headerTitle: "",
+        }}
+      />
+
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <View>
+          <Story />
+          <PostList />
+        </View>
+      </ScrollView>
+    </SafeAreaView>
+  );
+};
 
 export default Post;
