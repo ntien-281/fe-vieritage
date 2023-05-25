@@ -1,8 +1,13 @@
-import { Text } from 'react-native';
+import { Text, View } from 'react-native';
 
 const User = () => {
   return (
-    <Text>User screen (./app/user.js)</Text>
+    <View>
+      <Text className = "text-red-600">User screen</Text>
+      <View className="px-6 py-6 bg-blue-500">
+        <Text>Long</Text>
+      </View>
+    </View>
   )
 }
 
