@@ -1,10 +1,10 @@
-// Layout for screens in this directory, also support nextjs-like routing
+  // Layout for screens in this directory, also support nextjs-like routing
 
 import { Stack } from 'expo-router';
 import {NavBar} from '../components'; 
 
 
-const Layout = () => {
+const Layout = () => {  
   return (
     <>
       <Stack />

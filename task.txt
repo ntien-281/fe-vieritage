@@ -1,0 +1,4 @@
+- sua lai story : them my story + message 
+- sua lai bai post cho giong ins
+- tao popup modal khi click vao create post
+- upload bai post + mutiple choice image +  expo image picker

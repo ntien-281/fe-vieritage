@@ -21,6 +21,7 @@ const Post = () => {
       <ScrollView showsVerticalScrollIndicator={false}>
         <View>
           <Story />
+
           <PostList />
         </View>
       </ScrollView>
