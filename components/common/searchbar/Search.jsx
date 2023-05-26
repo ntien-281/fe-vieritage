@@ -20,6 +20,8 @@ const Search = () => {
         onChangeText={(query) => setSearchQuery(query)}
         value={searchQuery}
         fontSize={16}
+        iconColor='white'
+        placeholderTextColor='white'
       />
     </View>
   )

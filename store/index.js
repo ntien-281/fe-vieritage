@@ -15,3 +15,14 @@ export const useCountStore = create(
       }),
   }))
 );
+
+// Lưu tab/path đang ở hiện tại
+export const useCurrentTab = create(
+  immer((set) => ({
+    currentTab: "",
+    setTab: (newTab) =>
+      set((state) => {
+        state.currentTab = newTab;
+      }),
+  }))
+);
