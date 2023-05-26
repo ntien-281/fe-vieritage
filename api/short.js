@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const AUTH_DEV_TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NDZmNGZjMTJmOTYxYzMyYjRmNWZjYjgiLCJuYW1lIjoiVGllbiIsImlhdCI6MTY4NTAxNjUxNCwiZXhwIjoxNjg3NjA4NTE0fQ.ggYm_9mqCe9JdC0YSQ6zKmohwt6DkC4BL4GN864DNMk";
+const AUTH_DEV_TOKEN = "";
 
 const BASE_URL = "http://192.168.1.176:5000/api/v1/shorts"
 
