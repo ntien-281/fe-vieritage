@@ -1,7 +1,7 @@
 import { Avatar, Button, Card, Text, Chip } from "react-native-paper";
 import { View } from "react-native";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { SliderBox } from "react-native-image-slider-box";
 
 const PostCard = ({ post }) => {
@@ -12,7 +12,6 @@ const PostCard = ({ post }) => {
   ]);
 
   //
-  const [modalVisible, setModalVisible] = useState(false);
 
   const { createdUser, updatedAt, queryGenres } = post;
 

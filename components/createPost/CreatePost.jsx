@@ -1,49 +1,23 @@
-import { useState } from "react";
-import {
-  IconButton,
-  Modal,
-  Portal,
-  Text,
-  Button,
-  PaperProvider,
-} from "react-native-paper";
-import { ScrollView } from "react-native";
+// import { useState } from "react";
+// import {
+//   IconButton,
+//   Modal,
+//   Portal,
+//   Text,
+//   Button,
+//   PaperProvider,
+// } from "react-native-paper";
+// import { ScrollView } from "react-native";
+// import { useModalPost } from "../../store";
 
-const CreatePost = () => {
-  const [visible, setVisible] = useState(false);
-  const showModal = () => setVisible(true);
-  const hideModal = () => setVisible(false);
-  return (
-    <>
-      <IconButton icon="plus-circle-outline" size={25} onPress={showModal} />
-      {visible && <NewPost visible={visible} hideModal={hideModal} />}
-    </>
-  );
-};
+// const CreatePost = () => {
+//   const showModal = useModalPost((state) => state.showModal);
 
-const NewPost = ({ visible, hideModal }) => {
-  return (
-    <PaperProvider>
-      <Portal>
-        <Modal
-          visible={visible}
-          onDismiss={hideModal}
-          contentContainerStyle={{
-            backgroundColor: "#333",
-            height: "90%",
-            width: "90%",
-          }}
-        >
-          <ScrollView>
-            <Text>A long chunk of text</Text>
-            <Button onPress={hideModal} mode="contained" dark={true}>
-              Cool!
-            </Button>
-          </ScrollView>
-        </Modal>
-      </Portal>
-    </PaperProvider>
-  );
-};
+//   return (
+//     <>
+//       <IconButton icon="plus-circle-outline" size={25} onPress={showModal} />
+//     </>
+//   );
+// };
 
-export default CreatePost;
+// export default CreatePost;

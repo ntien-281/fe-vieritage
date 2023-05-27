@@ -18,7 +18,7 @@ const PostList = () => {
     setIsLoading(true);
     try {
       const res = await axios.get(
-        "http://172.17.14.84:5000/api/v1/posts?userId=646ef3637251a0220e25132a",
+        "http://10.0.21.238:5000/api/v1/posts?userId=646ef3637251a0220e25132a",
         {
           headers: {
             Authorization:

@@ -7,4 +7,5 @@ import CreatePost from "./createPost/CreatePost";
 import Search from "./search/Search";
 import Story from "./story/Story";
 import PostList from "./postList/PostList";
-export { NavBar, NotifiBtn, CreatePost, Search, Story, PostList };
+import GenreSelect from "./common/genre/GenreSelect";
+export { NavBar, NotifiBtn, CreatePost, Search, Story, PostList, GenreSelect };
