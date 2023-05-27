@@ -4,7 +4,7 @@ import Modal from 'react-native-modal'
 import { Button } from 'react-native-paper'
 const Result = ({ type = 'correct' }) => {
   return (
-    <View className='absolute max-w-[360] rounded-2xl bg-white px-4 py-8 shadow-2xl'>
+    <View className='absolute top-20 max-w-[360] rounded-2xl bg-white px-4 py-8 shadow-2xl'>
       <Text className='text-center text-2xl font-semibold text-black'>
         {type === 'correct' ? 'Chính xác' : 'Sai rồi'}
       </Text>

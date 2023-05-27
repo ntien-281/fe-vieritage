@@ -17,8 +17,17 @@ const Short = ({ navigation }) => {
     await fetchData()
     setShowQuestion((prev) => !prev)
   }
-  const [show, setShow] = useState(true)
+  const [show, setShow] = useState(false)
   const toggle = () => setShow((prev) => !prev)
+
+  useEffect(() => {
+    const temp = setInterval(() => {
+      toggle()
+    }, 30000)
+    return () => {
+      clearInterval(temp)
+    }
+  }, [])
 
   return (
     <PaperProvider>
@@ -33,7 +42,7 @@ const Short = ({ navigation }) => {
         <IconButton icon='plus-circle' size={50} iconColor='white' animated />
       </TouchableOpacity>
       {show && <QuestionPopup toggle={toggle} toggleQuestion={toggleShowQs} />}
-      <Question data={data} show={showQuestion} toggle={toggleQuestion} />
+      <Question toggleParent={toggle} data={data} show={showQuestion} toggle={toggleQuestion} />
     </PaperProvider>
   )
 }

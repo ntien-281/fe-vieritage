@@ -1,4 +1,4 @@
-import { View, Text, Pressable } from 'react-native'
+import { View, Text, Pressable, TouchableOpacity } from 'react-native'
 import React, { useEffect } from 'react'
 import Modal from 'react-native-modal'
 import { Button } from 'react-native-paper'
@@ -6,12 +6,17 @@ import { useState } from 'react'
 import Result from './Result'
 import axios from 'axios'
 import { BASE_URL } from '../../config'
-import { useUserStore } from '../../store'
-const Question = ({ show, toggle, data }) => {
+import { useQuestion, useUserStore } from '../../store'
+import { shallow } from 'zustand/shallow'
+import { QuestionComponent } from './QuestionComponent'
+
+const Question = ({ show, toggle, toggleParent }) => {
   const [loading, setLoading] = useState(-1)
   const [showResult, setShowResult] = useState(false)
   const [type, setType] = useState('correct')
   const user = useUserStore((state) => state.user)
+  const [idx, inc] = useQuestion((state) => [state.idx, state.inc], shallow)
+  const data = QuestionComponent[idx]
 
   if (!data) return <View />
 
@@ -25,15 +30,16 @@ const Question = ({ show, toggle, data }) => {
     if (loading !== -1) return
     try {
       setLoading(true)
-      const res = await axios.put(
-        BASE_URL + '/questions/' + data._id + '/answer/' + data?.answers?.at(value - 1)?._id,
-        {},
-        {
-          headers: {
-            Authorization: 'Bearer ' + user.token,
-          },
-        }
-      )
+
+      // const res = await axios.put(
+      //   BASE_URL + '/questions/' + data._id + '/answer/' + data?.answers?.at(value - 1)?._id,
+      //   {},
+      //   {
+      //     headers: {
+      //       Authorization: 'Bearer ' + user.token,
+      //     },
+      //   }
+      // )
       if (data?.answers?.at(value - 1)?.isTrue) {
         setType('correct')
         toggleResult()
@@ -57,6 +63,8 @@ const Question = ({ show, toggle, data }) => {
   const hide = () => {
     toggle()
     setShowResult(false)
+    toggleParent()
+    inc()
   }
 
   return (
@@ -70,46 +78,46 @@ const Question = ({ show, toggle, data }) => {
           </Text>
           <Text className='font-app-semibold mb-6 w-full text-left text-base text-black'> {data.name}</Text>
           <View className='flex-row justify-between'>
-            <Button
+            <TouchableOpacity
               loading={loading === 1}
               onPress={() => answer(1)}
               buttonColor='#A0D8B3'
               mode='contained'
-              className='flex-1'
+              className='h-[80] flex-1 justify-center rounded-2xl bg-[#A0D8B3] p-4'
             >
-              <Text className='text-base text-black'>{data?.answers?.at(0)?.value}</Text>
-            </Button>
+              <Text className='w-full text-base text-black'>{data?.answers?.at(0)?.value}</Text>
+            </TouchableOpacity>
             <View className='w-4' />
-            <Button
+            <TouchableOpacity
               loading={loading === 2}
               onPress={() => answer(2)}
               buttonColor='#A0D8B3'
               mode='contained'
-              className='flex-1'
+              className='h-[80] flex-1 justify-center rounded-2xl bg-[#A0D8B3] p-4'
             >
-              <Text className='text-base text-black'>{data?.answers?.at(1)?.value}</Text>
-            </Button>
+              <Text className='w-full text-base text-black'>{data?.answers?.at(1)?.value}</Text>
+            </TouchableOpacity>
           </View>
           <View className='mt-4 flex-row justify-between'>
-            <Button
+            <TouchableOpacity
               loading={loading === 3}
               onPress={() => answer(3)}
               buttonColor='#A0D8B3'
               mode='contained'
-              className='flex-1'
+              className='h-[80] flex-1 justify-center rounded-2xl bg-[#A0D8B3] p-4'
             >
-              <Text className='text-base text-black'>{data?.answers?.at(2)?.value}</Text>
-            </Button>
+              <Text className='w-full text-base text-black'>{data?.answers?.at(2)?.value}</Text>
+            </TouchableOpacity>
             <View className='w-4' />
-            <Button
+            <TouchableOpacity
               loading={loading === 4}
               onPress={() => answer(4)}
               buttonColor='#A0D8B3'
               mode='contained'
-              className='flex-1'
+              className='h-[80] flex-1 justify-center rounded-2xl bg-[#A0D8B3] p-4'
             >
-              <Text className='text-base text-black'>{data?.answers?.at(3)?.value}</Text>
-            </Button>
+              <Text className='w-full text-base text-black'>{data?.answers?.at(3)?.value}</Text>
+            </TouchableOpacity>
           </View>
         </Pressable>
       </Pressable>
