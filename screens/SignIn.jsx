@@ -24,7 +24,7 @@ const SignIn = ({ navigation }) => {
     <SafeAreaView className="mb-[25px] flex-1 px-[20px] pt-[25px]">
       <View>
         <Text className="mb-[36px] mt-[54px] text-[36px] font-[700]">
-          Sign In
+          Đăng nhập
         </Text>
         <TextInput
           onChangeText={(text) => setEmail(text)}
@@ -34,7 +34,7 @@ const SignIn = ({ navigation }) => {
           activeOutlineColor="#969393"
           placeholderTextColor="#969393"
           mode="outlined"
-          placeholder="Enter Your Email"
+          placeholder="Nhập email của bạn"
         />
         <TextInput
           onChangeText={(text) => setPassword(text)}
@@ -45,12 +45,12 @@ const SignIn = ({ navigation }) => {
           activeOutlineColor="#969393"
           placeholderTextColor="#969393"
           mode="outlined"
-          placeholder="Enter Your Password"
+          placeholder="Nhập mật khẩu của bạn"
         />
         <View className="mt-[16px] flex flex-row items-center justify-end">
           <TouchableOpacity>
             <Text className="text-[16px] text-[#969393] underline">
-              Forget Password?
+              Quên mật khẩu
             </Text>
           </TouchableOpacity>
         </View>
@@ -63,11 +63,11 @@ const SignIn = ({ navigation }) => {
               login(email, password, setUser);
             }}
           >
-            <Text className="my-0 text-[20px] font-[700]">&nbsp; Sign In</Text>
+            <Text className="my-0 text-[20px] font-[700]">&nbsp; Đăng nhập</Text>
           </Button>
         </TouchableOpacity>
         <View className="mt-[160px] flex flex-row items-center justify-center text-center">
-          <Text className="text-[16px]">Don{"'"}t have an account? </Text>
+          <Text className="text-[16px]">Chưa có tài khoản? </Text>
           <TouchableOpacity>
             <Text
               className="font-[700]"
@@ -75,7 +75,7 @@ const SignIn = ({ navigation }) => {
                 navigation.navigate("SignUp");
               }}
             >
-              Sign Up
+            Đăng ký
             </Text>
           </TouchableOpacity>
         </View>

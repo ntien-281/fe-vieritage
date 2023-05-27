@@ -44,7 +44,7 @@ const SignUp = ({ navigation }) => {
     <SafeAreaView className="mb-[25px] flex-1 px-[20px] pt-[25px]">
       <View>
         <Text className="mb-[36px] mt-[40px] text-[36px] font-[700]">
-          Sign Up
+          Đăng ký
         </Text>
         <TextInput
           onChangeText={(text) => setName(text)}
@@ -54,7 +54,7 @@ const SignUp = ({ navigation }) => {
           activeOutlineColor="#969393"
           placeholderTextColor="#969393"
           mode="outlined"
-          placeholder="Enter Your Full Name"
+          placeholder="Nhập họ tên của bạn"
         />
         <TextInput
           onChangeText={(text) => setEmail(text)}
@@ -64,7 +64,7 @@ const SignUp = ({ navigation }) => {
           activeOutlineColor="#969393"
           placeholderTextColor="#969393"
           mode="outlined"
-          placeholder="Enter Your Email"
+          placeholder="Nhập email của bạn"
         />
         <TextInput
           onChangeText={(text) => setPassword(text)}
@@ -75,7 +75,7 @@ const SignUp = ({ navigation }) => {
           activeOutlineColor="#969393"
           placeholderTextColor="#969393"
           mode="outlined"
-          placeholder="Enter Your Password"
+          placeholder="Nhập mật khẩu của bạn"
         />
         <TextInput
           onChangeText={(text) => setConfirmPassword(text)}
@@ -86,7 +86,7 @@ const SignUp = ({ navigation }) => {
           activeOutlineColor="#969393"
           placeholderTextColor="#969393"
           mode="outlined"
-          placeholder="Enter Your Confirm Password"
+          placeholder="Nhập xác nhận mật khẩu của bạn"
         />
         <DatePickerInput
           theme={{
@@ -96,7 +96,7 @@ const SignUp = ({ navigation }) => {
             },
           }}
           locale="en"
-          label="Birthdate"
+          label="Sinh nhật"
           className="mt-[24px] bg-white text-black"
           value={inputDate}
           onChange={(d) => setInputDate(d)}
@@ -115,9 +115,9 @@ const SignUp = ({ navigation }) => {
           </Button>
         </TouchableOpacity>
         <View className="mt-[48px] flex flex-row items-center justify-center text-center text-[16px] leading-[20px]">
-          <Text>Already have an account? </Text>
+          <Text>Đã có tài khoản </Text>
           <TouchableOpacity onPress={() => navigation.navigate("SignIn")}>
-            <Text className="font-[700]">Sign In</Text>
+            <Text className="font-[700]">Đăng nhập</Text>
           </TouchableOpacity>
         </View>
       </View>
