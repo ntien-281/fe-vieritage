@@ -14,7 +14,7 @@ const SignIn = () => {
   const [showPwd, setShowPwd] = useState(false);
   const [user, setUser] = useUserStore((state) => [state.user, state.setUser], shallow);
 
-  console.log('UserSignIn',user);
+  // console.log('UserSignIn',user);
   if(user?.user?.name) {
     signIn()
   }

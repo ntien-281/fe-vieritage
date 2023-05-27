@@ -26,8 +26,6 @@ const Map = () => {
   const [mapRegion, setMapRegion] = useState({
     latitude: 10.8699573,
     longitude: 106.8028159,
-    // latitudeDelta: 0.0922,
-    // longitudeDelta: 0.0421,
     latitudeDelta: 0.1534,
     longitudeDelta: 0.1861,
   })
@@ -57,12 +55,12 @@ const Map = () => {
       return
     }
     const location = await Location.getCurrentPositionAsync({})
-    // setMapRegion({
-    //   latitude: location.coords.latitude,
-    //   longitude: location.coords.longitude,
-    //   latitudeDelta: 0.0922,
-    //   longitudeDelta: 0.0421,
-    // });
+    setMapRegion({
+      //   latitude: location.coords.latitude,
+      //   longitude: location.coords.longitude,
+      //   latitudeDelta: 0.1534,
+      // longitudeDelta: 0.1861,
+    })
   }
 
   useEffect(() => {
@@ -83,6 +81,11 @@ const Map = () => {
         onPress={(data, details = null) => {
           // 'details' is provided when fetchDetails = true
           console.log(data, details)
+          //           var place = autocomplete.getPlace();
+          // // get lat
+          // var lat = place.geometry.location.lat();
+          // // get lng
+          // var lng = place.geometry.location.lng();
         }}
         query={{
           key: GOOGLE_MAPS_APIKEY,
@@ -137,8 +140,10 @@ const Map = () => {
         </Marker>
         <Circle
           center={{
-            latitude: 10.8699573,
-            longitude: 106.8028159,
+            // latitude: 10.8699573,
+            // longitude: 106.8028159,
+            latitude: mapRegion.latitude,
+            longitude: mapRegion.longitude,
           }}
           radius={10000}
         />

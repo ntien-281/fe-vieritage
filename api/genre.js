@@ -20,7 +20,7 @@ export const getAllGenres = async (user_token) => {
     });
     return res.data.data;
   } catch (error) {
-    console.log(error);
+    // console.log(error);
   }
 };
 

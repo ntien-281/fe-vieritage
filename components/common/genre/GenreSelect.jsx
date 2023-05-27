@@ -32,7 +32,7 @@ const GenreSelect = () => {
     fetch()
   }, [])
 
-  console.log(selectedGenres)
+  // console.log(selectedGenres);
 
   return (
     <View className='mt-1'>

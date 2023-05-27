@@ -26,6 +26,7 @@ const getAllShortsOfUser = async (user_id, user_token) => {
     let temp = res.data.data
     return temp
   } catch (error) {
+    // console.log(error);
     console.log(error)
   }
 }
@@ -33,6 +34,7 @@ const getAllShortsOfUser = async (user_id, user_token) => {
 const getVerifiedShorts = async (user_token) => {
   let res
   try {
+    // console.log("er");
     console.log('er')
     res = await short.request({
       url: '/recommend',
@@ -125,7 +127,7 @@ const downvote = async (short_id, user_token) => {
     })
     return res.data.data
   } catch (error) {
-    console.log(error)
+    // console.log(error);
   }
 }
 
@@ -141,7 +143,7 @@ const disdownvote = async (short_id, user_token) => {
     })
     return res.data.data
   } catch (error) {
-    console.log(error)
+    // console.log(error);
   }
 }
 
@@ -157,12 +159,12 @@ const getShort = async (short_id, user_token) => {
     })
     return res.data.data
   } catch (error) {
-    console.log(error)
+    // console.log(error);
   }
 }
 
 const uploadShort = async (formData, user_token) => {
-  console.log(formData)
+  // console.log(formData);
   try {
     const res = await short.request({
       method: 'POST',
@@ -175,7 +177,7 @@ const uploadShort = async (formData, user_token) => {
     })
     return res
   } catch (error) {
-    console.log(error)
+    // console.log(error);
   }
 }
 

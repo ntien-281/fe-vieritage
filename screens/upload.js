@@ -53,7 +53,7 @@ const UploadShort = () => {
   const uploadImage = async () => {
     const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
     if (status !== "granted") {
-      console.log("Permission denied");
+      // console.log("Permission denied");
       return;
     }
 
@@ -66,7 +66,7 @@ const UploadShort = () => {
     });
 
     if (!result.canceled) {
-      console.log(result);
+      // console.log(result);
       setSelectedVideo(result.assets[0]);
       setDuration(result.assets[0]?.duration);
       const formData = new FormData();
@@ -80,8 +80,8 @@ const UploadShort = () => {
           headers: { "Content-Type": "multipart/form-data" },
         })
         .then((response) => {
-          console.log("Image uploaded successfully");
-          console.log(response.data);
+          // console.log("Image uploaded successfully");
+          // console.log(response.data);
           setSelectedVideo(response.data);
         })
         .catch((error) => {
@@ -108,7 +108,7 @@ const UploadShort = () => {
         }
       )
       .then((response) => {
-        console.log(response.data);
+        // console.log(response.data);
       })
       .catch((error) => {
         console.error({ ...error });

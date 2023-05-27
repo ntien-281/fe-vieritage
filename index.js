@@ -11,16 +11,24 @@ import Tab from './navigation/Tab'
 import CustomSafeAreaView from './components/common/CustomSafeAreaView'
 import { useUserStore } from './store'
 import AuthNav from './navigation/AuthNav'
+import { getCurrentUser } from './api/userApi'
+import CreateEventScreen from './admin/screens/CreateEventScreen'
 import { LogBox } from 'react-native'
 
 LogBox.ignoreAllLogs() //Ignore all log notifications
 
 const App = () => {
-  const [user] = useUserStore((state) => [state.user], shallow)
+  const [user, userDetail, setUserDetail] = useUserStore(
+    (state) => [state.user, state.userDetail, setUserDetail],
+    shallow
+  )
+  console.log(user)
   return (
     <SafeAreaProvider>
       <CustomSafeAreaView>
-        <NavigationContainer>{user?.token ? <Tab /> : <AuthNav />}</NavigationContainer>
+        <NavigationContainer>
+          {user?.user?.role === 'ADMIN' ? <CreateEventScreen /> : user?.token ? <Tab /> : <AuthNav />}
+        </NavigationContainer>
       </CustomSafeAreaView>
     </SafeAreaProvider>
   )
