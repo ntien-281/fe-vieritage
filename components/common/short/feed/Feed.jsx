@@ -1,5 +1,4 @@
 import { View, Text, FlatList } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
 import React, { useRef, useState, useEffect } from "react";
 import { ActivityIndicator } from "react-native-paper";
 
@@ -73,7 +72,7 @@ const Feed = () => {
             itemVisiblePercentThreshold: 90,
           }}
           data={shortOfUser}
-          renderItem={({ item, index }) => {
+          renderItem={({ item }) => {
             return (
               <View style={styles.short}>
                 <ShortSingle

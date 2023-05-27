@@ -255,4 +255,6 @@ const ShortSingle = forwardRef(({ item }, ref) => {
   );
 });
 
+ShortSingle.displayName = "ShortSingle";
+
 export default ShortSingle;

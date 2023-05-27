@@ -1,4 +1,4 @@
-import { View, FlatList, ScrollView, SafeAreaView } from "react-native";
+import { View, FlatList, SafeAreaView } from "react-native";
 import React, { useEffect, useState } from "react";
 
 import { getAllGenres } from "../../../api/genre";
