@@ -1,24 +1,21 @@
 import React, { useEffect, useState } from "react";
-import { useAuth } from "../../context/auth";
 import { Link } from "expo-router";
 import { SafeAreaView, Text, View, TouchableOpacity } from "react-native";
 import { TextInput, Button } from "react-native-paper";
-import { login } from "../../api/userApi";
+import { login } from "../api/userApi";
 import { shallow } from "zustand/shallow";
-import { useUserStore } from "../../store/index";
+import { useUserStore } from "../store/index";
 
-const SignIn = () => {
-  const { signIn } = useAuth();
+const SignIn = ({navigation}) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPwd, setShowPwd] = useState(false);
   const [user, setUser] = useUserStore((state) => [state.user, state.setUser], shallow);
-
-  console.log('UserSignIn',user);
-  if(user?.user?.name) {
-    signIn()
+  console.log(user?.token);
+  console.log(email, password);
+  if(user?.token) {
+    navigation.navigate("Map");
   }
-
   return (
     <SafeAreaView className="flex-1 px-[20px] pt-[25px] mb-[25px]">
       <View>
@@ -79,12 +76,11 @@ const SignIn = () => {
             <Text className="text-[20px] font-[700] my-0">&nbsp; Sign In</Text>
           </Button>
         </TouchableOpacity>
-        <Text className="text-center flex flex-row justify-center items-center mt-[160px] text-[16px] leading-[20px]">
-          Don't have an account?
-          <Text> </Text>
-          <Link href="/SignUp">
+        <Text className="text-center flex-row justify-center items-center mt-[160px] text-[16px]">
+          <Text>Don{"'"}t have an account? </Text>
+          <TouchableOpacity onPress={() => navigation.navigate('SignUp')} className="justify-center items-center flex-row">
             <Text className="font-[700]">Sign Up</Text>
-          </Link>
+          </TouchableOpacity>
         </Text>
       </View>
     </SafeAreaView>
