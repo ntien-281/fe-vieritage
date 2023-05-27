@@ -4,7 +4,7 @@ import { shallow } from "zustand/shallow";
 import { logout } from "../api/userApi";
 import { useUserStore } from "../store/index";
 
-const User = () => {
+const UserScreen = () => {
   const [user, setUser] = useUserStore(
     (state) => [state.user, state.setUser],
     shallow
@@ -26,4 +26,4 @@ const User = () => {
   );
 };
 
-export default User;
+export default UserScreen;
