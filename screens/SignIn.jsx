@@ -78,8 +78,8 @@ const SignIn = ({navigation}) => {
         </TouchableOpacity>
         <Text className="text-center flex-row justify-center items-center mt-[160px] text-[16px]">
           <Text>Don{"'"}t have an account? </Text>
-          <TouchableOpacity onPress={() => navigation.navigate('SignUp')} className="justify-center items-center flex-row">
-            <Text className="font-[700]">Sign Up</Text>
+          <TouchableOpacity onPress={() => navigation.navigate('SignUp')} className="text-[16px] justify-center items-center flex-row">
+            <Text className="font-[700] justify-center items-center">Sign Up</Text>
           </TouchableOpacity>
         </Text>
       </View>
