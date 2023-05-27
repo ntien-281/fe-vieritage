@@ -1,8 +1,10 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import Entypo from "react-native-vector-icons/Entypo";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import Map from "../screens/map";
-import Short from "../screens/short";
 import ShortNav from "./shortNav";
+import PostNav from "./PostNav";
 const mTab = createBottomTabNavigator();
 
 export default function Tab() {
@@ -23,8 +25,32 @@ export default function Tab() {
         },
       }}
     >
-      <mTab.Screen name="ShortNav" component={ShortNav} />
-      <mTab.Screen name="Post" component={Map} />
+      <mTab.Screen
+        name="ShortNav"
+        component={ShortNav}
+        options={{
+          tabBarIcon: ({ focused }) => (
+            <Entypo
+              name="heart"
+              size={24}
+              color={focused ? "#000000" : "#9e9e9e"}
+            />
+          ),
+        }}
+      />
+      <mTab.Screen
+        name="Post"
+        component={PostNav}
+        options={{
+          tabBarIcon: ({ focused }) => (
+            <MaterialCommunityIcons
+              name="post"
+              size={24}
+              color={focused ? "#000000" : "#9e9e9e"}
+            />
+          ),
+        }}
+      />
       <mTab.Screen name="Map" component={Map} />
       <mTab.Screen name="User" component={Map} />
     </mTab.Navigator>

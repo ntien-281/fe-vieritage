@@ -6,20 +6,23 @@ import { login } from "../api/userApi";
 import { shallow } from "zustand/shallow";
 import { useUserStore } from "../store/index";
 
-const SignIn = ({navigation}) => {
+const SignIn = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPwd, setShowPwd] = useState(false);
-  const [user, setUser] = useUserStore((state) => [state.user, state.setUser], shallow);
+  const [user, setUser] = useUserStore(
+    (state) => [state.user, state.setUser],
+    shallow
+  );
   console.log(user?.token);
   console.log(email, password);
-  if(user?.token) {
+  if (user?.token) {
     navigation.navigate("Map");
   }
   return (
-    <SafeAreaView className="flex-1 px-[20px] pt-[25px] mb-[25px]">
+    <SafeAreaView className="mb-[25px] flex-1 px-[20px] pt-[25px]">
       <View>
-        <Text className="mt-[54px] text-[36px] font-[700] mb-[36px]">
+        <Text className="mb-[36px] mt-[54px] text-[36px] font-[700]">
           Sign In
         </Text>
         <TextInput
@@ -50,13 +53,13 @@ const SignIn = ({navigation}) => {
           mode="outlined"
           placeholder="Enter Your Password"
         />
-        <View className="flex justify-end items-center flex-row mt-[16px]">
+        <View className="mt-[16px] flex flex-row items-center justify-end">
           <TouchableOpacity
           // onPress={() => {
           //   navigation.navigate("ForgotPassword");
           // }}
           >
-            <Text className="text-[#969393] text-[16px] underline">
+            <Text className="text-[16px] text-[#969393] underline">
               Forget Password?
             </Text>
           </TouchableOpacity>
@@ -67,18 +70,21 @@ const SignIn = ({navigation}) => {
             // icon="camera"
             mode="contained"
             compact={true}
-            className="rounded-[10px] py-[10px] bg-[#acbcff] mt-[36px]"
+            className="mt-[36px] rounded-[10px] bg-[#acbcff] py-[10px]"
             // onPress={handleSignIn}
             onPress={() => {
               login(email, password, setUser);
             }}
           >
-            <Text className="text-[20px] font-[700] my-0">&nbsp; Sign In</Text>
+            <Text className="my-0 text-[20px] font-[700]">&nbsp; Sign In</Text>
           </Button>
         </TouchableOpacity>
-        <Text className="text-center flex-row justify-center items-center mt-[160px] text-[16px]">
+        <Text className="mt-[160px] flex-row items-center justify-center text-center text-[16px]">
           <Text>Don{"'"}t have an account? </Text>
-          <TouchableOpacity onPress={() => navigation.navigate('SignUp')} className="justify-center items-center flex-row">
+          <TouchableOpacity
+            onPress={() => navigation.navigate("SignUp")}
+            className="flex-row items-center justify-center"
+          >
             <Text className="font-[700]">Sign Up</Text>
           </TouchableOpacity>
         </Text>
