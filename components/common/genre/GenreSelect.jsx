@@ -48,7 +48,7 @@ const GenreSelect = () => {
         <View className="w-screen">
           <View className="mb-3 flex-row items-center">
             <IconButton icon="arrow-down-bold" disabled iconColor="black" />
-            <Text variant="titleLarge">Chọn phân loại cho short:</Text>
+            <Text variant="titleLarge">Chọn phân loại:</Text>
           </View>
           <Divider />
           <SafeAreaView className="px-3 py-6 mb-48">

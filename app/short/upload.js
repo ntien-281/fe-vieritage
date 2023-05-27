@@ -51,7 +51,8 @@ const UploadShort = () => {
       quality: 1
     })
     if (!result.canceled) {
-      setSelectedVideo(result.assets);
+      setSelectedVideo(result.assets[0]);
+      setDuration(result.assets[0]?.duration);
     }
   }
 

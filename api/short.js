@@ -92,19 +92,20 @@ const getShort = async (short_id) => {
   }
 }
 
-const uploadShort = async () => {
+const uploadShort = async (formData) => {
   try {
     const res = await short.request({
       method: 'POST',
       url: '/upload',
       headers: {
         'Content-Type': 'multipart/form-data',
-      }
+      },
+      body: formData
     })
   } catch (error) {
     console.log(error);
   } finally {
-    return res.data.data;
+    return res;
   }
 }
 
