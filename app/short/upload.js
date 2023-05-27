@@ -15,6 +15,8 @@ const UploadShort = () => {
   const [selectedVideo, setSelectedVideo] = useState({});
   const selectedGenres = useUploadShort((state) => state.selectedGenres);
   const clearGenres = useUploadShort((state) => state.clearGenres);
+  const setDuration = useUploadShort((state) => state.setDuration);
+  const shortDuration = useUploadShort((state) => state.shortDuration);
 
   useEffect(() => {
     return () => {
@@ -49,7 +51,7 @@ const UploadShort = () => {
       quality: 1
     })
     if (!result.canceled) {
-      setSelectedVideo(result.assets[0]);
+      setSelectedVideo(result.assets);
     }
   }
 
@@ -62,7 +64,7 @@ const UploadShort = () => {
       </View>
     );
   }
-  // console.log(galleryItems);
+  console.log(selectedVideo);
   return (
     <>
       <Stack.Screen

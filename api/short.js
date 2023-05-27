@@ -94,7 +94,13 @@ const getShort = async (short_id) => {
 
 const uploadShort = async () => {
   try {
-    
+    const res = await short.request({
+      method: 'POST',
+      url: '/upload',
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      }
+    })
   } catch (error) {
     console.log(error);
   } finally {

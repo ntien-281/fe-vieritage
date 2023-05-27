@@ -1,4 +1,4 @@
-import { View, FlatList, ScrollView } from "react-native";
+import { View, FlatList, ScrollView, SafeAreaView } from "react-native";
 import React, { useEffect, useState } from "react";
 
 import { getAllGenres } from "../../../api/genre";
@@ -51,26 +51,24 @@ const GenreSelect = () => {
             <Text variant="titleLarge">Chọn phân loại cho short:</Text>
           </View>
           <Divider />
-          <ScrollView showsHorizontalScrollIndicator={false} showsVerticalScrollIndicator={false}>
-            <View className="px-3 py-6">
-              <FlatList
-                data={genres}
-                renderItem={(item) => (
-                  <>
-                    <GenreItem item={item.item || item} />
-                    <Divider />
-                  </>
-                )}
-                keyExtractor={(item) => item._id}
-                windowSize={8}
-                initialNumToRender={6}
-                maxToRenderPerBatch={8}
-                contentContainerStyle={{
-                  paddingBottom: 200
-                }}
-              />
-            </View>
-          </ScrollView>
+          <SafeAreaView className="px-3 py-6 mb-48">
+            <FlatList
+              data={genres}
+              renderItem={(item) => (
+                <>
+                  <GenreItem item={item.item || item} />
+                  <Divider />
+                </>
+              )}
+              keyExtractor={(item) => item._id}
+              windowSize={6}
+              initialNumToRender={6}
+              maxToRenderPerBatch={6}
+              contentContainerStyle={{
+                paddingBottom: 240
+              }}
+            />
+          </SafeAreaView>
         </View>
       )}
     </View>

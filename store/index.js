@@ -31,6 +31,7 @@ export const useCurrentTab = create(
 export const useUploadShort = create(
   immer((set) => ({
     selectedGenres: [],
+    shortDuration: 0,
     addGenre: (genre_id) =>
       set((state) => {
         state.selectedGenres = [...state.selectedGenres, genre_id];
@@ -42,6 +43,10 @@ export const useUploadShort = create(
     clearGenres: () =>
       set((state) => {
         state.selectedGenres = [];
+      }),
+    setDuration: (newDuration) =>
+      set((state) => {
+        state.shortDuration = newDuration;
       })
   }))
 )
