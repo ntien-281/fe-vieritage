@@ -15,7 +15,6 @@ export const useCountStore = create(
   }))
 );
 
-
 export const useUserStore = create(
   immer((set) => ({
     setUser: (user) =>
@@ -27,5 +26,40 @@ export const useUserStore = create(
         state.user = null
       })
     }
+  }))
+)
+
+// Lưu tab/path đang ở hiện tại
+export const useCurrentTab = create(
+  immer((set) => ({
+    currentTab: "",
+    setTab: (newTab) =>
+      set((state) => {
+        state.currentTab = newTab;
+      }),
+  }))
+);
+
+// State form upload short
+export const useUploadShort = create(
+  immer((set) => ({
+    selectedGenres: [],
+    shortDuration: 0,
+    addGenre: (genre_id) =>
+      set((state) => {
+        state.selectedGenres = [...state.selectedGenres, genre_id];
+      }),
+    removeGenre: (genre_id) =>
+      set((state) => {
+        state.selectedGenres = state.selectedGenres.filter(genre => genre != genre_id);
+      }),
+    clearGenres: () =>
+      set((state) => {
+        state.selectedGenres = [];
+      }),
+    setDuration: (newDuration) =>
+      set((state) => {
+        state.shortDuration = newDuration;
+      })
   }))
 )
