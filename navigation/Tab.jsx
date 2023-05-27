@@ -35,8 +35,8 @@ export default function Tab() {
         component={ShortNav}
         options={{
           tabBarLabel: "ShortNav",
-          tabBarIcon: ({ color, size }) => (
-            <AntDesign name="videocamera" size={24} color="black" />
+          tabBarIcon: ({ color, size, focused }) => (
+            <AntDesign name="videocamera" size={24} color={focused ? "#000000" : "#9e9e9e"} />
           ),
         }}
       />
@@ -59,8 +59,8 @@ export default function Tab() {
         component={Map}
         options={{
           tabBarLabel: "Post",
-          tabBarIcon: ({ color, size }) => (
-            <Feather name="map" size={24} color="black" />
+          tabBarIcon: ({ color, size, focused }) => (
+            <Feather name="map" size={24} color={focused ? "#000000" : "#9e9e9e"} />
           ),
         }}
       />
@@ -69,8 +69,8 @@ export default function Tab() {
         component={UserScreen}
         options={{
           tabBarLabel: "Post",
-          tabBarIcon: ({ color, size }) => (
-            <AntDesign name="user" size={24} color="black" />
+          tabBarIcon: ({ color, size, focused }) => (
+            <AntDesign name="user" size={24} color={focused ? "#000000" : "#9e9e9e"} />
           ),
         }}
       />

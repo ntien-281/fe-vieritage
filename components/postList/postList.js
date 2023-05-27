@@ -17,7 +17,7 @@ const PostList = () => {
     setIsLoading(true);
     try {
       const res = await axios.get(
-        "https://veritage-culture.onrender.com/api/v1/posts/recommend?type=verified",
+        "https://veritage-culture.onrender.com/api/v1/posts/recommend?type=unverified",
         {
           headers: {
             Authorization: `Bearer ${user?.token}`,
