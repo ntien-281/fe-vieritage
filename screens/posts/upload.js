@@ -7,21 +7,120 @@ import {
   TextInput,
   Button,
 } from "react-native-paper";
+import { useUploadShort, useUserStore } from "../../store";
+import * as ImagePicker from "expo-image-picker";
+import * as MediaLibrary from "expo-media-library";
 import { GenreSelect } from "../../components";
-import { useUploadShort } from "../../store";
+import axios from "axios";
+
 const UploadPost = () => {
   const clearGenres = useUploadShort((state) => state.clearGenres);
+  const [galleryItems, setGalleryItems] = useState([]);
+  const [hasGalleryPermission, setHasGalleryPermission] = useState(false);
 
   const [content, setContent] = useState("");
   const [description, setDescription] = useState("");
   const selectedGenres = useUploadShort((state) => state.selectedGenres);
-  const [images, setImages] = useState(1);
+
+  const user = useUserStore((state) => state.user);
+  const userToken = user.token;
 
   useEffect(() => {
     return () => {
       clearGenres();
     };
   }, []);
+
+  useEffect(() => {
+    const getPermission = async () => {
+      const galleryStatus =
+        await ImagePicker.requestMediaLibraryPermissionsAsync();
+      setHasGalleryPermission(galleryStatus.status == "granted");
+
+      if (galleryStatus.status == "granted") {
+        const userGalleryMedia = await MediaLibrary.getAssetsAsync({
+          sortBy: ["creationTime"],
+          mediaType: ["image"],
+        });
+        // setGalleryItems(userGalleryMedia.assets);
+      }
+    };
+    getPermission();
+  }, []);
+
+  if (!hasGalleryPermission) {
+    return (
+      <View>
+        <Text>Ứng dụng cần truy cập ảnh để thực hiện chức năng này.</Text>
+      </View>
+    );
+  }
+
+  const selectImage = async () => {
+    const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+    if (status !== "granted") {
+      console.log("Permission denied");
+      return;
+    }
+
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      aspect: [16, 9],
+      quality: 1,
+      base64: false,
+    });
+
+    if (!result.canceled) {
+      console.log(result);
+      const formData = new FormData();
+      formData.append("file", {
+        uri: result.assets[0].uri,
+        type: result.assets[0].type,
+        name: result.assets[0].fileName,
+      });
+      axios
+        .post("https://veritage-culture.onrender.com/api/v1/file", formData, {
+          headers: { "Content-Type": "multipart/form-data" },
+        })
+        .then((response) => {
+          console.log("Image uploaded successfully");
+          console.log(response.data);
+          setGalleryItems([
+            ...galleryItems,
+            { type: result.assets[0].type, url: response.data },
+          ]);
+        })
+        .catch((error) => {
+          console.error("Image upload failed");
+          console.error(error);
+        });
+    }
+  };
+
+  const handleUploadPost = () => {
+    axios.post(
+      "https://veritage-culture.onrender.com/api/v1/posts/upload",
+      {
+        content,
+        description,
+        genres: selectedGenres,
+        medias: galleryItems,
+      },
+      {
+        headers: {
+          Authorization: "Bearer " + userToken,
+        },
+      }
+    ).then((response) => {
+      console.log(response.data);
+    })
+    .catch((error) => {
+      console.error({ ...error });
+    });
+  };
+
+  console.log(galleryItems);
+
   return (
     <SafeAreaView>
       <Appbar.Header>
@@ -29,7 +128,7 @@ const UploadPost = () => {
 
         <View className="flex-row items-center p-1">
           <Text>Upload</Text>
-          <IconButton icon="upload" onPress={() => {}} />
+          <IconButton icon="upload" onPress={handleUploadPost} />
         </View>
       </Appbar.Header>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -51,21 +150,12 @@ const UploadPost = () => {
               icon="image"
               mode="contained"
               className="mt-2 w-2/3"
-              onPress={() => {}}
+              onPress={selectImage}
             >
               Chọn hình ảnh
             </Button>
           </View>
-          <View>
-            {images && (
-              <Image
-                source={{
-                  uri: "https://plus.unsplash.com/premium_photo-1668241683681-45500829fa42?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80",
-                }}
-                style={{ height: 200, width: 200 }}
-              />
-            )}
-          </View>
+          <View></View>
           <GenreSelect />
         </View>
       </ScrollView>

@@ -1,4 +1,4 @@
-import React, { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react'
+import React, { forwardRef, useEffect, useImperativeHandle, useMemo, useRef, useState } from 'react'
 import { Video } from 'expo-av'
 import { Avatar, IconButton, Text } from 'react-native-paper'
 import { Animated, View, TouchableOpacity } from 'react-native'
@@ -14,6 +14,10 @@ const ShortSingle = forwardRef(({ item }, ref) => {
   const [short, setShort] = useState(item)
   const [upState, setUpState] = useState(short.userUpvoted)
   const [downState, setDownState] = useState(short.userDownvoted)
+  const genresArray = useMemo(() => {
+    const temp = short.queryGenres.map((item) => item.name)
+    return temp
+  }, [])
 
   const user = useUserStore((state) => state.user)
   const user_token = user?.token
@@ -166,8 +170,7 @@ const ShortSingle = forwardRef(({ item }, ref) => {
     .maxDuration(200)
     .onTouchesUp(() => {})
 
-  const genresNameArray = short.queryGenres.map((item) => item.name)
-  const GenresString = genresNameArray.join(', ')
+  const GenresString = genresArray?.join(', ')
 
   return (
     <>
@@ -227,7 +230,12 @@ const ShortSingle = forwardRef(({ item }, ref) => {
         </View>
         <View>
           <Text variant='titleMedium' className='text-white' numberOfLines={1}>
-            Thể loại: {GenresString}
+            Thể loại: {GenresString || 'Không có'}
+          </Text>
+        </View>
+        <View>
+          <Text variant='titleMedium' className='text-white' numberOfLines={1}>
+            Lượt xem: {short.views.length}
           </Text>
         </View>
       </View>
