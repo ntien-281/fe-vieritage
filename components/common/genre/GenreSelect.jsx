@@ -16,18 +16,26 @@ const GenreSelect = () => {
   const [genres, setGenres] = useState([]);
   const [error, setError] = useState(false);
   const user = useUserStore((state) => state.user);
+<<<<<<< HEAD
+=======
   const user_token = user?.token;
 
+>>>>>>> main
   const selectedGenres = useUploadShort((state) => state.selectedGenres);
 
   useEffect(() => {
     const fetch = async () => {
       setIsLoading(true);
+<<<<<<< HEAD
+      const data = await getAllGenres(user?.token);
+=======
       const data = await getAllGenres(user_token);
+>>>>>>> main
       if (data) {
         console.log(data);
         setIsLoading(false);
         setGenres(data);
+        setError(false);
       } else {
         setIsLoading(true);
         setError(true);

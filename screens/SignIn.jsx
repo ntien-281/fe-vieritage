@@ -15,6 +15,11 @@ const SignIn = ({ navigation }) => {
     (state) => [state.user, state.setUser],
     shallow
   );
+<<<<<<< HEAD:screens/SignIn.js
+  console.log(user?.token);
+  console.log(email, password);
+=======
+>>>>>>> main:screens/SignIn.jsx
   if (user?.token) {
     navigation.navigate("Map");
   }
@@ -57,7 +62,12 @@ const SignIn = ({ navigation }) => {
           <Button
             mode="contained"
             compact={true}
+<<<<<<< HEAD:screens/SignIn.js
+            className="mt-[36px] rounded-[10px] bg-[#acbcff] py-[10px]"
+            // onPress={handleSignIn}
+=======
             className="mt-[36px] rounded-[10px] bg-[#A0D8B3] py-[10px]"
+>>>>>>> main:screens/SignIn.jsx
             onPress={() => {
               login(email, password, setUser);
             }}
@@ -65,6 +75,15 @@ const SignIn = ({ navigation }) => {
             <Text className="my-0 text-[20px] font-[700]">&nbsp; Sign In</Text>
           </Button>
         </TouchableOpacity>
+<<<<<<< HEAD:screens/SignIn.js
+        <Text className="mt-[160px] flex-row items-center justify-center text-center text-[16px]">
+          <Text>Don{"'"}t have an account? </Text>
+          <TouchableOpacity
+            onPress={() => navigation.navigate("SignUp")}
+            className="flex-row items-center justify-center"
+          >
+            <Text className="font-[700]">Sign Up</Text>
+=======
         <View className="mt-[160px] flex flex-row items-center justify-center text-center">
           <Text className="text-[16px]">Don{"'"}t have an account? </Text>
           <TouchableOpacity>
@@ -76,6 +95,7 @@ const SignIn = ({ navigation }) => {
             >
               Sign Up
             </Text>
+>>>>>>> main:screens/SignIn.jsx
           </TouchableOpacity>
         </View>
       </View>
