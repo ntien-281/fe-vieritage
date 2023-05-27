@@ -1,5 +1,5 @@
-import { create } from "zustand";
-import { immer } from "zustand/middleware/immer";
+import { create } from 'zustand'
+import { immer } from 'zustand/middleware/immer'
 
 // Khai báo store với immer middleware
 export const useCountStore = create(
@@ -15,3 +15,18 @@ export const useCountStore = create(
       }),
   }))
 );
+
+
+export const useUserStore = create(
+  immer((set) => ({
+    setUser: (user) =>
+      set((state) => {
+        state.user = user
+      }),
+    logOut: () => {
+      set((state) => {
+        state.user = null
+      })
+    }
+  }))
+)
