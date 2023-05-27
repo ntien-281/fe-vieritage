@@ -1,7 +1,6 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Map from "../screens/map";
-import Short from "../screens/short";
 import ShortNav from "./shortNav";
 import UserScreen from "../screens/UserScreen";
 import {
