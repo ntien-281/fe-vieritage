@@ -15,12 +15,11 @@ export const getAllGenres = async (user_token) => {
     res = await genres.request({
       method: "GET",
       headers: {
-        Authorization: `Bearer ${user_token}`,
+        Authorization: "Bearer " + user_token,
       },
     });
+    return res.data.data;
   } catch (error) {
     console.log(error);
-  } finally {
-    return res.data.data;
   }
 };

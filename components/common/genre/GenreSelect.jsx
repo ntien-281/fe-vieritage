@@ -16,12 +16,14 @@ const GenreSelect = () => {
   const [genres, setGenres] = useState([]);
   const [error, setError] = useState(false);
   const user = useUserStore((state) => state.user);
+  const user_token = user?.token;
+
   const selectedGenres = useUploadShort((state) => state.selectedGenres);
 
   useEffect(() => {
     const fetch = async () => {
       setIsLoading(true);
-      const data = await getAllGenres(user?.token);
+      const data = await getAllGenres(user_token);
       if (data) {
         console.log(data);
         setIsLoading(false);
@@ -38,7 +40,7 @@ const GenreSelect = () => {
   console.log(selectedGenres);
 
   return (
-    <View className="mt-4">
+    <View className="mt-1">
       {isLoading ? (
         <ActivityIndicator
           animating

@@ -21,6 +21,13 @@ export const useUserStore = create(
       set((state) => {
         state.user = user;
       }),
+
+    setUserDetail: (userDetail) => {
+      set((state) => {
+        state.userDetail = userDetail
+      })
+    },
+
     logOut: () => {
       set((state) => {
         state.user = null;

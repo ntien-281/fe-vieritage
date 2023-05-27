@@ -1,10 +1,11 @@
 import { Text, View, Button } from "react-native";
-import { useCountStore } from "../store/index";
 import { shallow } from "zustand/shallow";
+import { useAuth } from "../context/auth";
 import { logout } from "../api/userApi";
-import { useUserStore } from "../store/index";
+import { useUserStore, useCountStore } from "../store/index";
 
 const User = () => {
+  const { signOut } = useAuth();
   const [user, setUser] = useUserStore(
     (state) => [state.user, state.setUser],
     shallow
@@ -12,6 +13,7 @@ const User = () => {
   const handleSignOut = () => {
     logout();
     setUser({user: {}});
+    signOut();
   };
   return (
     <View
