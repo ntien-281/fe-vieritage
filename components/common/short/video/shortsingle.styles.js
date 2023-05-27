@@ -6,6 +6,11 @@ const styles = StyleSheet.create({
     position: 'relative',
     zIndex: -1
   },
+  iconButton: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 4,
+  }
 });
 
 export default styles;

@@ -80,7 +80,7 @@ const Feed = () => {
                   ref={(ShortSingleRef) =>
                     (mediaRefs.current[item._id] = ShortSingleRef)
                   }
-                  short={item}
+                  item={item}
                 />
               </View>
             );

@@ -16,7 +16,7 @@ const NavBar = () => {
   const router = useRouter();
 
   const handlePush = (tab) => {
-    router.push(`./${tab}`);
+    router.push(`${tab}`);
     setTab(tab);
   }
 

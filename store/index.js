@@ -26,3 +26,18 @@ export const useCurrentTab = create(
       }),
   }))
 );
+
+// State form upload short
+export const useUploadShort = create(
+  immer((set) => ({
+    selectedGenres: [],
+    addGenre: (genre_id) =>
+      set((state) => {
+        state.selectedGenres = [...state.selectedGenres, genre_id];
+      }),
+    removeGenre: (genre_id) =>
+      set((state) => {
+        state.selectedGenres = state.selectedGenres.filter(genre => genre._id != genre_id);
+      })
+  }))
+)

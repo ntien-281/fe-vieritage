@@ -1,8 +1,8 @@
 import axios from "axios";
 
-const AUTH_DEV_TOKEN = "";
+const AUTH_DEV_TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NDZmNGZjMTJmOTYxYzMyYjRmNWZjYjgiLCJuYW1lIjoiVGllbiIsImlhdCI6MTY4NTAxNjUxNCwiZXhwIjoxNjg3NjA4NTE0fQ.ggYm_9mqCe9JdC0YSQ6zKmohwt6DkC4BL4GN864DNMk";
 
-const BASE_URL = "http://192.168.1.176:5000/api/v1/shorts"
+const BASE_URL = "http://10.0.21.253:5000/api/v1/shorts"
 
 const short = axios.create({
   baseURL: BASE_URL,
@@ -27,7 +27,7 @@ const getAllShortsOfUser = async (user_id) => {
   }
 }
 
-const upVote = async (short_id) => {
+const upvote = async (short_id) => {
   try {
     res = await short.request({
       method: 'POST',
@@ -36,9 +36,70 @@ const upVote = async (short_id) => {
   } catch (error) {
     console.log(error);
   } finally {
-    // Return short JSON with upvoteers updated
-    return res.data;
+    return res.data.data;
   }
 }
 
-export { getAllShortsOfUser, upVote }
+const disupvote = async (short_id) => {
+  try {
+    res = await short.request({
+      method: 'POST',
+      url: `/disupvote/${short_id}`,
+    })
+  } catch (error) {
+    console.log(error);
+  } finally {
+    return res.data.data;
+  }
+}
+
+const downvote = async (short_id) => {
+  try {
+    res = await short.request({
+      method: 'POST',
+      url: `/downvote/${short_id}`,
+    })
+  } catch (error) {
+    console.log(error);
+  } finally {
+    return res.data.data;
+  }
+}
+
+const disdownvote = async (short_id) => {
+  try {
+    res = await short.request({
+      method: 'POST',
+      url: `/disdownvote/${short_id}`,
+    })
+  } catch (error) {
+    console.log(error);
+  } finally {
+    return res.data.data;
+  }
+}
+
+const getShort = async (short_id) => {
+  try {
+    res = await short.request({
+      method: 'GET',
+      url: `/${short_id}`,
+    })
+  } catch (error) {
+    console.log(error);
+  } finally {
+    return res.data.data;
+  }
+}
+
+const uploadShort = async () => {
+  try {
+    
+  } catch (error) {
+    console.log(error);
+  } finally {
+    return res.data.data;
+  }
+}
+
+export { getAllShortsOfUser, upvote, disupvote, downvote, disdownvote, getShort, uploadShort }

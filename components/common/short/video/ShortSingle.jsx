@@ -1,22 +1,43 @@
-import React, { forwardRef, useEffect, useImperativeHandle, useRef, useState } from "react";
+import React, {
+  forwardRef,
+  useEffect,
+  useImperativeHandle,
+  useRef,
+  useState,
+} from "react";
 import { Video } from "expo-av";
-import { Avatar, IconButton, Text } from 'react-native-paper';
-import { Animated, Pressable, View } from "react-native";
+import { Avatar, IconButton, Text } from "react-native-paper";
+import { Animated, View, TouchableOpacity } from "react-native";
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
 
 import styles from "./shortsingle.styles";
 
-import { upVote } from "../../../../api/short";
+import {
+  upvote,
+  disupvote,
+  disdownvote,
+  downvote,
+  getShort,
+} from "../../../../api/short";
 import { useCurrentTab } from "../../../../store";
+import { formatCompactNumber } from "../../../../utils";
 
-const ShortSingle = forwardRef(({ short }, ref) => {
+const ShortSingle = forwardRef(({ item }, ref) => {
+  const [short, setShort] = useState(item);
+  const [upState, setUpState] = useState(short.userUpvoted);
+  const [downState, setDownState] = useState(short.userDownvoted);
+
   const shortRef = useRef(null);
-  const [lastView, setLastView] = useState(false)
-  useImperativeHandle(ref, () => ({
-    play,
-    unload,
-    stop
-  }), [])
+  const [lastView, setLastView] = useState(false);
+  useImperativeHandle(
+    ref,
+    () => ({
+      play,
+      unload,
+      stop,
+    }),
+    []
+  );
 
   const pauseOpacity = useRef(new Animated.Value(0)).current;
   const playOpacity = useRef(new Animated.Value(0)).current;
@@ -24,28 +45,23 @@ const ShortSingle = forwardRef(({ short }, ref) => {
   const currentTab = useCurrentTab((state) => state.currentTab);
 
   useEffect(() => {
-    return () => unload();
-  }, [])
-
-  useEffect(() => {
     tabChangeShortHandle();
-  }, [currentTab])
-  
+  }, [currentTab]);
+
   const tabChangeShortHandle = async () => {
     const status = await shortRef.current.getStatusAsync();
-    if (currentTab !== 'short') {
+    if (currentTab !== "short") {
       if (status?.isPlaying) {
         setLastView(true);
         await shortRef.current.pauseAsync();
       }
-    }
-    else {
+    } else {
       if (lastView) {
         await shortRef.current.playAsync();
         setLastView(false);
       }
     }
-  }
+  };
 
   const fadeInOut = (someOpacity) => {
     Animated.sequence([
@@ -60,7 +76,7 @@ const ShortSingle = forwardRef(({ short }, ref) => {
         useNativeDriver: true,
       }),
     ]).start();
-  }
+  };
 
   const play = async () => {
     if (shortRef.current == null) return;
@@ -108,8 +124,7 @@ const ShortSingle = forwardRef(({ short }, ref) => {
       } catch (e) {
         console.log(e);
       }
-    }
-    else {
+    } else {
       try {
         fadeInOut(playOpacity);
         await shortRef.current.playAsync();
@@ -117,16 +132,55 @@ const ShortSingle = forwardRef(({ short }, ref) => {
         console.log(e);
       }
     }
-  }
+  };
 
+  const handleUpvote = async () => {
+    let res;
+    if (short.userUpvoted) {
+      setUpState(false);
+      res = await disupvote(short._id);
+    } else {
+      setUpState(true);
+      res = await upvote(short._id);
+    }
+    if (res) {
+      console.log(res);
+      let newShort = await getShort(short._id);
+      setShort(newShort);
+      setUpState(newShort.userUpvoted);
+      setDownState(newShort.userDownvoted);
+    }
+  };
+
+  const handleDownvote = async () => {
+    let res;
+    if (short.userDownvoted) {
+      setDownState(false);
+      res = await disdownvote(short._id);
+    } else {
+      setDownState(true);
+      res = await downvote(short._id);
+    }
+    if (res) {
+      console.log(res);
+      let newShort = await getShort(short._id);
+      setShort(newShort);
+      setDownState(newShort.userDownvoted);
+      setUpState(newShort.userUpvoted);
+    }
+  };
 
   const SingleTap = Gesture.Tap().maxDuration(200).onTouchesUp(handleTap);
-  const DoubleTap = Gesture.Tap().maxDuration(200).onTouchesUp(() => {});
+  const DoubleTap = Gesture.Tap()
+    .maxDuration(200)
+    .onTouchesUp(() => {
+      
+    });
 
-  console.log(lastView);
   return (
     <>
-      <GestureDetector className=""
+      <GestureDetector
+        className=""
         gesture={Gesture.Exclusive(DoubleTap, SingleTap)}
       >
         <View className="bg-transparent absolute bottom-0 left-0 top-0 right-0 z-10 flex items-center justify-center">
@@ -138,21 +192,20 @@ const ShortSingle = forwardRef(({ short }, ref) => {
                 opacity: playOpacity,
               }}
               iconColor="white"
-              />
+            />
           </View>
           <View className="absolute">
             <IconButton
               icon="pause-circle"
               size={70}
               style={{
-                opacity: pauseOpacity
+                opacity: pauseOpacity,
               }}
               iconColor="white"
-              />
+            />
           </View>
         </View>
       </GestureDetector>
-
 
       <Video
         ref={shortRef}
@@ -166,40 +219,37 @@ const ShortSingle = forwardRef(({ short }, ref) => {
 
       <View className="absolute bottom-5 w-2/3 left-3 z-20">
         <View className="w-1/3">
-          <Avatar.Image source={{ uri: short.createdUser.avatar }} size=
-          {60} />
-          <Text variant="titleMedium" className="text-white">{short.createdUser.name}</Text>
+          <Avatar.Image source={{ uri: short.createdUser.avatar || "https://png.pngtree.com/png-vector/20210604/ourmid/pngtree-gray-avatar-placeholder-png-image_3416697.jpg" }} size={60} />
+          <Text variant="titleMedium" className="text-white">
+            {short.createdUser.name}
+          </Text>
         </View>
         <View>
-          <Text variant="bodyMedium" className="text-white" numberOfLines={2}>Shorts description. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ac tellus iaculis, tincidunt lectus sit amet, vehicula eros. Integer luctus nisi ac ante tincidunt, nec maximus lectus elementum. Donec in tristique felis. Fusce interdum non sapien eu fermentum. Fusce ex metus, lobortis ac aliquam sed, molestie et justo. Nullam fringilla erat non massa viverra iaculis. Sed sit amet nisi vehicula, mollis nisl non, ullamcorper felis. Curabitur convallis laoreet egestas. Sed tempus imperdiet lectus, et ullamcorper turpis vestibulum id. Vivamus lacinia iaculis arcu in viverra.</Text>
+          <Text variant="bodyMedium" className="text-white" numberOfLines={2}>
+            {short?.description || "Video không có chú thích"}
+          </Text>
         </View>
       </View>
 
-      <View className="absolute flex flex-col justify-around bottom-0 right-0 z-20">
-        <IconButton
-          size={36}
-          iconColor="white"
-          icon={short.userUpvoted ? "arrow-up-bold" : "arrow-up-bold-outline"}
-          onPress={() => { upVote(short._id) }}
-        />
-        <IconButton
-          size={36}
-          iconColor="white"
-          icon={short.userDownvoted ? "arrow-down-bold" : "arrow-down-bold-outline"}
-          onPress={() => {}}
-        />
-        <IconButton
-          size={36}
-          iconColor="white"
-          icon="dots-horizontal"
-          onPress={() => {}}
-        />
-        <IconButton
-          size={36}
-          iconColor="white"
-          icon="share-outline"
-          onPress={() => {}}
-        />
+      <View className="absolute flex flex-col justify-around bottom-0 right-0 z-20 mb-3">
+        <TouchableOpacity style={styles.iconButton} onPress={handleUpvote}>
+          <IconButton
+            size={36}
+            iconColor="white"
+            icon={upState ? "arrow-up-bold" : "arrow-up-bold-outline"}
+            animated
+          />
+          <Text variant="labelLarge" className="text-white">{formatCompactNumber(short.upvotes.length)}</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.iconButton} onPress={handleDownvote}>
+          <IconButton
+            size={36}
+            iconColor="white"
+            icon={downState ? "arrow-down-bold" : "arrow-down-bold-outline"}
+            animated
+          />
+          <Text variant="labelLarge" className="text-white">{formatCompactNumber(short.downvotes.length)}</Text>
+        </TouchableOpacity>
       </View>
     </>
   );
