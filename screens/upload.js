@@ -5,9 +5,7 @@ import * as ImagePicker from "expo-image-picker";
 import * as MediaLibrary from "expo-media-library";
 import { GenreSelect } from "../components";
 import { useUploadShort, useUserStore } from "../store";
-import { uploadShort } from "../api/short";
 import axios from "axios";
-import * as FileSystem from "expo-file-system";
 
 const UploadShort = () => {
   const [hasGalleryPermission, setHasGalleryPermission] = useState(false);
