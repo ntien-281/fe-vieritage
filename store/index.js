@@ -1,19 +1,20 @@
 import { create } from 'zustand'
 import { immer } from 'zustand/middleware/immer'
+import { QuestionComponent } from '../components/question/QuestionComponent'
 // Khai báo store với immer middleware
 export const useCountStore = create(
   immer((set) => ({
     count: 0,
     increment: () =>
       set((state) => {
-        state.count += 1;
+        state.count += 1
       }),
     decrement: () =>
       set((state) => {
-        state.count -= 1;
+        state.count -= 1
       }),
   }))
-);
+)
 
 export const useUserStore = create(
   immer((set) => ({
@@ -32,20 +33,20 @@ export const useUserStore = create(
       set((state) => {
         state.user = null
       })
-    }
+    },
   }))
 )
 
 // Lưu tab/path đang ở hiện tại
 export const useCurrentTab = create(
   immer((set) => ({
-    currentTab: "",
+    currentTab: '',
     setTab: (newTab) =>
       set((state) => {
-        state.currentTab = newTab;
+        state.currentTab = newTab
       }),
   }))
-);
+)
 
 // State form upload short
 export const useUploadShort = create(
@@ -54,19 +55,29 @@ export const useUploadShort = create(
     shortDuration: 0,
     addGenre: (genre_id) =>
       set((state) => {
-        state.selectedGenres = [...state.selectedGenres, genre_id];
+        state.selectedGenres = [...state.selectedGenres, genre_id]
       }),
     removeGenre: (genre_id) =>
       set((state) => {
-        state.selectedGenres = state.selectedGenres.filter(genre => genre != genre_id);
+        state.selectedGenres = state.selectedGenres.filter((genre) => genre != genre_id)
       }),
     clearGenres: () =>
       set((state) => {
-        state.selectedGenres = [];
+        state.selectedGenres = []
       }),
     setDuration: (newDuration) =>
       set((state) => {
-        state.shortDuration = newDuration;
-      })
+        state.shortDuration = newDuration
+      }),
+  }))
+)
+
+export const useQuestion = create(
+  immer((set) => ({
+    idx: 0,
+    inc: () =>
+      set((state) => {
+        state.idx = (state.idx + 1) % QuestionComponent.length
+      }),
   }))
 )

@@ -23,3 +23,18 @@ export const getAllGenres = async (user_token) => {
     // console.log(error);
   }
 };
+
+export const getGenreById = async (user_token) => {
+  let res;
+  try {
+    res = await genres.request({
+      method: 'GET',
+      headers: {
+        Authorization: 'Bearer ' + user_token,
+      },
+    });
+    return res.data.data;
+  } catch (e) {
+    console.log(e);
+  }
+}
