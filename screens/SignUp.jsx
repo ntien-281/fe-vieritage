@@ -3,26 +3,51 @@ import { useAuth } from "../context/auth";
 import { Link } from "expo-router";
 import {
   SafeAreaView,
-  StyleSheet,
-  Image,
   Text,
   View,
   TouchableOpacity,
 } from "react-native";
-import { StatusBar } from "expo-status-bar";
-import { TextInput, Button, Checkbox } from "react-native-paper";
+import {
+  TextInput,
+  Button,
+} from "react-native-paper";
+import { DatePickerInput } from "react-native-paper-dates";
+import { useUserStore } from "../store";
+import { shallow } from "zustand/shallow";
+import { register } from "../api/userApi";
 
-const SignUp = ({navigation}) => {
+
+const SignUp = ({ navigation }) => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [name, setName] = useState("");
+  const [inputDate, setInputDate] = React.useState(undefined);
+
+  const [user, setUser] = useUserStore(
+    (state) => [state.user, state.setUser],
+    shallow
+  );
+  // console.log("2002-02-02");
+  const handleSignUp = () => {
+    register(name, email, password, inputDate, setUser);
+  }
+
+  console.log(user?.token);
+  if (user?.token) {
+    navigation.navigate("Map");
+  }
+
+  console.log(name, email, password, confirmPassword, inputDate);
+
   return (
-    <SafeAreaView className="flex-1 px-[20px] pt-[25px] mb-[25px]">
+    <SafeAreaView className="mb-[25px] flex-1 px-[20px] pt-[25px]">
       <View>
-        <Text className="mt-[40px] text-[36px] font-[700] mb-[36px]">
+        <Text className="mb-[36px] mt-[40px] text-[36px] font-[700]">
           Sign Up
         </Text>
         <TextInput
-          // value={formData.email}
-          // onChangeText = {email => setEmail(email)}
-          // onChangeText={(text) => handleChangeEmail(text)}
+          onChangeText={(text) => setName(text)}
           className="rounded-[10px] py-[6px]"
           theme={{ roundness: 10 }}
           outlineColor="#bfc2c7"
@@ -30,15 +55,9 @@ const SignUp = ({navigation}) => {
           placeholderTextColor="#969393"
           mode="outlined"
           placeholder="Enter Your Full Name"
-          // left={
-          //   <TextInput.Icon icon={require("../assets/icons/person_2.png")} />
-          // }
         />
         <TextInput
-          // value={formData.email}
-          // onChangeText = {email => setEmail(email)}
-
-          // onChangeText={(text) => handleChangeEmail(text)}
+          onChangeText={(text) => setEmail(text)}
           className="mt-[18px] rounded-[10px] py-[6px]"
           theme={{ roundness: 10 }}
           outlineColor="#bfc2c7"
@@ -46,14 +65,9 @@ const SignUp = ({navigation}) => {
           placeholderTextColor="#969393"
           mode="outlined"
           placeholder="Enter Your Email"
-          // left={
-          //   <TextInput.Icon icon={require("../assets/icons/person_2.png")} />
-          // }
         />
         <TextInput
-          // value={formData.password}
-          // onChangeText={(text) => handleChangePassword(text)}
-          // label="password"
+          onChangeText={(text) => setPassword(text)}
           secureTextEntry={true}
           className="mt-[18px] rounded-[10px] py-[6px]"
           theme={{ roundness: 10 }}
@@ -62,15 +76,9 @@ const SignUp = ({navigation}) => {
           placeholderTextColor="#969393"
           mode="outlined"
           placeholder="Enter Your Password"
-          // left={<TextInput.Icon icon={require("../assets/icons/lock.png")} />}
-          // right={
-          //   <TextInput.Icon icon={require("../assets/icons/visibility.png")} />
-          // }
         />
         <TextInput
-          // value={formData.password}
-          // onChangeText={(text) => handleChangePassword(text)}
-          // label="password"
+          onChangeText={(text) => setConfirmPassword(text)}
           secureTextEntry={true}
           className="mt-[18px] rounded-[10px] py-[6px]"
           theme={{ roundness: 10 }}
@@ -79,10 +87,20 @@ const SignUp = ({navigation}) => {
           placeholderTextColor="#969393"
           mode="outlined"
           placeholder="Enter Your Confirm Password"
-          // left={<TextInput.Icon icon={require("../assets/icons/lock.png")} />}
-          // right={
-          //   <TextInput.Icon icon={require("../assets/icons/visibility.png")} />
-          // }
+        />
+        <DatePickerInput
+          theme={{
+            colors: {
+              primary: "black",
+              underlineColor: "transparent",
+            },
+          }}
+          locale="en"
+          label="Birthdate"
+          className="mt-[24px] bg-white text-black"
+          value={inputDate}
+          onChange={(d) => setInputDate(d)}
+          inputMode="start"
         />
 
         <TouchableOpacity>
@@ -90,20 +108,18 @@ const SignUp = ({navigation}) => {
             // icon="camera"
             mode="contained"
             compact={true}
-            className="rounded-[10px] py-[10px] bg-[#acbcff] mt-[36px]"
-            // onPress={handleSignIn}
-            // onPress={() => signIn()}
+            className="mt-[36px] rounded-[10px] bg-[#A0D8B3] py-[10px]"
+            onPress={handleSignUp}
           >
-            <Text className="text-[20px] font-[700] my-0">&nbsp; Sign Up</Text>
+            <Text className="my-0 text-[20px] font-[700]">&nbsp; Sign Up</Text>
           </Button>
         </TouchableOpacity>
-        <Text className="text-center flex flex-row justify-center items-center mt-[48px] text-[16px] leading-[20px]">
-          Already have an account?
-          <Text> </Text>
-          <TouchableOpacity onPress={() => navigation.navigate('SignIn')} >
+        <View className="mt-[48px] flex flex-row items-center justify-center text-center text-[16px] leading-[20px]">
+          <Text>Already have an account? </Text>
+          <TouchableOpacity onPress={() => navigation.navigate("SignIn")}>
             <Text className="font-[700]">Sign In</Text>
-            </TouchableOpacity>
-        </Text>
+          </TouchableOpacity>
+        </View>
       </View>
     </SafeAreaView>
   );
