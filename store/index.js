@@ -38,6 +38,10 @@ export const useUploadShort = create(
     removeGenre: (genre_id) =>
       set((state) => {
         state.selectedGenres = state.selectedGenres.filter(genre => genre._id != genre_id);
+      }),
+    clearGenres: () =>
+      set((state) => {
+        state.selectedGenres = [];
       })
   }))
 )

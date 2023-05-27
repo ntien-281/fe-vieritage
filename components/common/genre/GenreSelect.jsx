@@ -52,7 +52,7 @@ const GenreSelect = () => {
           </View>
           <Divider />
           <ScrollView showsHorizontalScrollIndicator={false} showsVerticalScrollIndicator={false}>
-            <View className="flex-row flex-wrap px-3 py-6">
+            <View className="px-3 py-6">
               <FlatList
                 data={genres}
                 renderItem={(item) => (
@@ -65,6 +65,9 @@ const GenreSelect = () => {
                 windowSize={8}
                 initialNumToRender={6}
                 maxToRenderPerBatch={8}
+                contentContainerStyle={{
+                  paddingBottom: 200
+                }}
               />
             </View>
           </ScrollView>

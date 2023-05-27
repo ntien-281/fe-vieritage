@@ -5,6 +5,7 @@ import { Button, IconButton, Text } from "react-native-paper";
 import * as ImagePicker from "expo-image-picker";
 import * as MediaLibrary from "expo-media-library";
 import { GenreSelect } from "../../components";
+import { useUploadShort } from "../../store";
 
 
 const UploadShort = () => {
@@ -12,6 +13,14 @@ const UploadShort = () => {
   const [hasGalleryPermission, setHasGalleryPermission] = useState(false);
   const [galleryItems, setGalleryItems] = useState([]);
   const [selectedVideo, setSelectedVideo] = useState({});
+  const selectedGenres = useUploadShort((state) => state.selectedGenres);
+  const clearGenres = useUploadShort((state) => state.clearGenres);
+
+  useEffect(() => {
+    return () => {
+      clearGenres();
+    }
+  }, [])
 
   useEffect(() => {
     const getPermission = async () => {
@@ -67,7 +76,7 @@ const UploadShort = () => {
           headerStyle: { backgroundColor: "white" },
         }}
       />
-      <View className=" items-center flex-col">
+      <View className="items-center flex-col">
         <View>
           <Button icon="image" mode="contained" onPress={pickFromGallery} className="w-2/3 mt-2">
             Chọn video

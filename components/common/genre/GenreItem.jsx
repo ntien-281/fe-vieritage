@@ -24,8 +24,8 @@ const GenreItem = ({ item }) => {
 
 
   return (
-    <View className={`mb-3 ${selected ? "rounded-full border-2 border-blue-500" : ""}`} ref={itemRef}>
-      <TouchableOpacity className="flex-row items-center pl-7" onPressOut={handlePress}>
+    <View className={`mb-3 ${selected ? "rounded-full border-2 border-blue-500 bg-blue-400" : ""}`} ref={itemRef}>
+      <TouchableOpacity className="flex-row items-center pl-7" onPress={handlePress}>
         <IconButton icon="check" size={40} iconColor="black" />
         <Text variant="titleMedium" className="text-black">
           {item.name}
