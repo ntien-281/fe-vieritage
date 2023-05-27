@@ -1,6 +1,7 @@
 import api from "./api";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { shallow } from "zustand/shallow";
+import { useUserStore } from "../store";
 import axios from "axios";
 
 export const login = async (email, password, setUser) => {
@@ -10,7 +11,7 @@ export const login = async (email, password, setUser) => {
       email,
       password,
     });
-    const userToken = response.data?.token;
+    console.log("debug", response.data);
     await AsyncStorage.setItem("user", JSON.stringify(response.data));
     await AsyncStorage.setItem("token", JSON.stringify(response.data?.token));
     const user = response.data;
@@ -45,11 +46,7 @@ export const checkAuthLogged = async (isLoading, setIsLoading) => {
       // Nếu có, cập nhật trạng thái người dùng trong store Zustand
       const [setUser] = useUserStore((state) => [state.setUser], shallow);
       setUser(user);
-
-      // useAuthStore.setState({ user: JSON.parse(user) });
     } else {
-      // Nếu không, chuyển đến màn hình đăng nhập
-      //   navigateToLoginScreen();
       console.log("no user");
     }
     setIsLoading(false);
