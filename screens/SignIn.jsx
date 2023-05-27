@@ -46,8 +46,7 @@ const SignIn = ({ navigation }) => {
           placeholder="Enter Your Password"
         />
         <View className="mt-[16px] flex flex-row items-center justify-end">
-          <TouchableOpacity
-          >
+          <TouchableOpacity>
             <Text className="text-[16px] text-[#969393] underline">
               Forget Password?
             </Text>

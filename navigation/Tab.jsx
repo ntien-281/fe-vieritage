@@ -1,9 +1,9 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Map from "../screens/map";
-import Short from "../screens/short";
 import ShortNav from "./shortNav";
 import UserScreen from "../screens/UserScreen";
+import PostNav from "./PostNav";
 import {
   MaterialCommunityIcons,
   Feather,
@@ -36,17 +36,20 @@ export default function Tab() {
         options={{
           tabBarLabel: "ShortNav",
           tabBarIcon: ({ color, size }) => (
-            <Entypo name="video" size={24} color="black" />
+            <AntDesign name="videocamera" size={24} color="black" />
           ),
         }}
       />
       <mTab.Screen
         name="Post"
-        component={Map}
+        component={PostNav}
         options={{
-          tabBarLabel: "Post",
-          tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="post" size={24} color="black" />
+          tabBarIcon: ({ focused }) => (
+            <MaterialCommunityIcons
+              name="post"
+              size={24}
+              color={focused ? "#000000" : "#9e9e9e"}
+            />
           ),
         }}
       />

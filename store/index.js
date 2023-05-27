@@ -1,5 +1,5 @@
-import { create } from 'zustand'
-import { immer } from 'zustand/middleware/immer'
+import { create } from "zustand";
+import { immer } from "zustand/middleware/immer";
 // Khai báo store với immer middleware
 export const useCountStore = create(
   immer((set) => ({
@@ -19,15 +19,22 @@ export const useUserStore = create(
   immer((set) => ({
     setUser: (user) =>
       set((state) => {
-        state.user = user
+        state.user = user;
       }),
+
+    setUserDetail: (userDetail) => {
+      set((state) => {
+        state.userDetail = userDetail
+      })
+    },
+
     logOut: () => {
       set((state) => {
-        state.user = null
-      })
-    }
+        state.user = null;
+      });
+    },
   }))
-)
+);
 
 // Lưu tab/path đang ở hiện tại
 export const useCurrentTab = create(
@@ -51,7 +58,9 @@ export const useUploadShort = create(
       }),
     removeGenre: (genre_id) =>
       set((state) => {
-        state.selectedGenres = state.selectedGenres.filter(genre => genre != genre_id);
+        state.selectedGenres = state.selectedGenres.filter(
+          (genre) => genre != genre_id
+        );
       }),
     clearGenres: () =>
       set((state) => {
@@ -60,6 +69,6 @@ export const useUploadShort = create(
     setDuration: (newDuration) =>
       set((state) => {
         state.shortDuration = newDuration;
-      })
+      }),
   }))
-)
+);
