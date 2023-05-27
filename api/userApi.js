@@ -2,7 +2,6 @@ import api from "./api";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { shallow } from "zustand/shallow";
 import { useUserStore } from "../store";
-import axios from "axios";
 
 export const login = async (email, password, setUser) => {
   console.log("debug", email, password);
@@ -19,8 +18,28 @@ export const login = async (email, password, setUser) => {
       setUser(user)
     }
     
-    // // Đăng nhập thành công, chuyển đến màn hình chính
-    // // navigateToMainScreen();
+  } catch (error) {
+    // Xử lý lỗi đăng nhập
+    console.error({ ...error });
+  }
+};
+
+export const register = async (name, email, password, dob, setUser) => {
+  console.log("debug",name, email, password, dob);
+  try {
+    const response = await api.post(`/auth/register`, {
+      name,
+      email,
+      password,
+      dob
+    });
+    console.log("debug", response.data);
+    await AsyncStorage.setItem("user", JSON.stringify(response.data));
+    await AsyncStorage.setItem("token", JSON.stringify(response.data?.token));
+    const user = response.data;
+    if(user){
+      setUser(user);
+    }
   } catch (error) {
     // Xử lý lỗi đăng nhập
     console.error({ ...error });
@@ -37,9 +56,8 @@ export const logout = async () => {
   }
 };
 
-export const checkAuthLogged = async (isLoading, setIsLoading) => {
+export const checkAuthLogged = async () => {
   try {
-    setIsLoading(true);
     const user = await AsyncStorage.getItem("user");
     const token = await AsyncStorage.getItem("token");
     if (user && token) {
@@ -49,7 +67,6 @@ export const checkAuthLogged = async (isLoading, setIsLoading) => {
     } else {
       console.log("no user");
     }
-    setIsLoading(false);
   } catch (error) {
     console.error(error);
   }
