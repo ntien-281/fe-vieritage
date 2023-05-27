@@ -6,15 +6,14 @@ import styles from "./feed.styles";
 import ShortSingle from "../video/ShortSingle";
 
 import { getAllShortsOfUser } from "../../../../api/short";
-
+import { useUserStore } from "../../../../store";
 const USER_DEV_ID = "646ef3637251a0220e25132a";
 
 const Feed = () => {
-
   const [shortOfUser, setShortOfUser] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(false);
-
+  const user = useUserStore((state) => state.user);
   useEffect(() => {
     const fetch = async () => {
       setIsLoading(true);
@@ -22,6 +21,7 @@ const Feed = () => {
       if (res) {
         setShortOfUser(res);
         setIsLoading(false);
+        setError(false);
       } else {
         setIsLoading(true);
         setError(true);
@@ -47,17 +47,17 @@ const Feed = () => {
   return (
     <View style={styles.container}>
       {isLoading ? (
-        <View className="flex justify-center items-center" style={styles.short}>
-          <ActivityIndicator 
+        <View className="flex items-center justify-center" style={styles.short}>
+          <ActivityIndicator
             animating
             color="white"
             size={80}
-            className="m-auto absolute"
+            className="absolute m-auto"
           />
         </View>
       ) : error ? (
-        <View className="flex justify-center items-center" style={styles.short}>
-          <Text className="text-white text-2xl">Có lỗi xảy ra.</Text>
+        <View className="flex items-center justify-center" style={styles.short}>
+          <Text className="text-2xl text-white">Có lỗi xảy ra.</Text>
         </View>
       ) : (
         <FlatList
@@ -84,7 +84,7 @@ const Feed = () => {
               </View>
             );
           }}
-          keyExtractor={item => item._id}
+          keyExtractor={(item) => item._id}
           decelerationRate={"normal"}
           onViewableItemsChanged={onViewableItemsChanged.current}
         />

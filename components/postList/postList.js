@@ -17,7 +17,7 @@ const PostList = () => {
     setIsLoading(true);
     try {
       const res = await axios.get(
-        "https://veritage-culture.onrender.com/api/v1/recommend?type=verified",
+        "https://veritage-culture.onrender.com/api/v1/posts/recommend?type=verified",
         {
           headers: {
             Authorization: `Bearer ${user?.token}`,
@@ -27,10 +27,10 @@ const PostList = () => {
       console.log(res.data);
       setPosts(res.data.data);
       setIsLoading(false);
+      setError(false);
     } catch (error) {
       setError(true);
       console.log(error);
-      // refetchPosts();
     } finally {
       setIsLoading(false);
     }
@@ -38,12 +38,7 @@ const PostList = () => {
   useEffect(() => {
     getPostsOfuser();
   }, []);
-  // refetch
-  // const refetchPosts = () => {
-  //   setIsLoading(true);
-  //   getPostsOfuser();
-  // };
-  //
+
   return (
     <View style={{ paddingBottom: BOTTOM_APPBAR_HEIGHT }}>
       <View>
