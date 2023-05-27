@@ -15,8 +15,10 @@ const SignIn = ({ navigation }) => {
     (state) => [state.user, state.setUser],
     shallow
   );
+  console.log('user', user);
+  
   if (user?.token) {
-    navigation.navigate("Map");
+    navigation.navigate("ShortNav");
   }
   return (
     <SafeAreaView className="mb-[25px] flex-1 px-[20px] pt-[25px]">
@@ -46,8 +48,7 @@ const SignIn = ({ navigation }) => {
           placeholder="Enter Your Password"
         />
         <View className="mt-[16px] flex flex-row items-center justify-end">
-          <TouchableOpacity
-          >
+          <TouchableOpacity>
             <Text className="text-[16px] text-[#969393] underline">
               Forget Password?
             </Text>

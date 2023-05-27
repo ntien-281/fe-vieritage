@@ -65,7 +65,7 @@ const UploadShort = () => {
       </View>
     );
   }
-  console.log(selectedVideo);
+  // console.log(selectedVideo);
   return (
     <>
       <Stack.Screen

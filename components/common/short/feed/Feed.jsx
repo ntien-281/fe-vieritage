@@ -23,7 +23,7 @@ const Feed = () => {
       setIsLoading(true);
       const res = await getVerifiedShorts(user?.token);
       if (res) {
-        console.log(res);
+        // console.log(res);
         setShortOfUser(res.data);
         setRecommId(res.recommId);
         setIsLoading(false);
@@ -50,7 +50,7 @@ const Feed = () => {
     });
   });
 
-  console.log(shortOfUser);
+  // console.log(shortOfUser);
 
   return (
     <View style={styles.container}>

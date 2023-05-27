@@ -26,14 +26,14 @@ const getAllShortsOfUser = async (user_id) => {
     });
     return res.data;
   } catch (error) {
-    console.log(error);
+    // console.log(error);
   }
 };
 
 const getVerifiedShorts = async (user_token) => {
   let res;
   try {
-    console.log("er");
+    // console.log("er");
     res = await short.request({
       url: "/recommend",
       method: "GET",
@@ -44,17 +44,17 @@ const getVerifiedShorts = async (user_token) => {
         Authorization: "Bearer " + user_token,
       },
     });
-    console.log("Tr");
+    // console.log("Tr");
 
     return res.data;
   } catch (error) {
-    console.log(error);
+    // console.log(error);
   }
 };
 
 const upvote = async (short_id, user_token) => {
   let res;
-  console.log("Bearer " + user_token);
+  // console.log("Bearer " + user_token);
   try {
     res = await short.request({
       method: "POST",
@@ -65,7 +65,7 @@ const upvote = async (short_id, user_token) => {
     });
     return res.data.data;
   } catch (error) {
-    console.log(error);
+    // console.log(error);
   }
 };
 
@@ -81,7 +81,7 @@ const disupvote = async (short_id, user_token) => {
     });
     return res.data.data;
   } catch (error) {
-    console.log(error);
+    // console.log(error);
   }
 };
 
@@ -97,7 +97,7 @@ const downvote = async (short_id, user_token) => {
     });
     return res.data.data;
   } catch (error) {
-    console.log(error);
+    // console.log(error);
   }
 };
 
@@ -113,7 +113,7 @@ const disdownvote = async (short_id, user_token) => {
     });
     return res.data.data;
   } catch (error) {
-    console.log(error);
+    // console.log(error);
   }
 };
 
@@ -129,12 +129,12 @@ const getShort = async (short_id, user_token) => {
     });
     return res.data.data;
   } catch (error) {
-    console.log(error);
+    // console.log(error);
   }
 };
 
 const uploadShort = async (formData, user_token) => {
-  console.log(formData);
+  // console.log(formData);
   try {
     const res = await short.request({
       method: "POST",
@@ -147,7 +147,7 @@ const uploadShort = async (formData, user_token) => {
     });
     return res;
   } catch (error) {
-    console.log(error);
+    // console.log(error);
   }
 };
 

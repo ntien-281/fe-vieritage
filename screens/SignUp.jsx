@@ -28,17 +28,17 @@ const SignUp = ({ navigation }) => {
     (state) => [state.user, state.setUser],
     shallow
   );
-  // console.log("2002-02-02");
+  // // console.log("2002-02-02");
   const handleSignUp = () => {
     register(name, email, password, inputDate, setUser);
   }
 
-  console.log(user?.token);
+  // console.log(user?.token);
   if (user?.token) {
     navigation.navigate("Map");
   }
 
-  console.log(name, email, password, confirmPassword, inputDate);
+  // console.log(name, email, password, confirmPassword, inputDate);
 
   return (
     <SafeAreaView className="mb-[25px] flex-1 px-[20px] pt-[25px]">

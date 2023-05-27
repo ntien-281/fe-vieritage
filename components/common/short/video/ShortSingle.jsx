@@ -90,7 +90,7 @@ const ShortSingle = forwardRef(({ item }, ref) => {
     try {
       await shortRef.current.playAsync();
     } catch (e) {
-      console.log(e);
+      // console.log(e);
     }
   };
 
@@ -103,17 +103,17 @@ const ShortSingle = forwardRef(({ item }, ref) => {
     try {
       await shortRef.current.stopAsync();
     } catch (e) {
-      console.log(e);
+      // console.log(e);
     }
   };
 
   const unload = async () => {
     if (shortRef.current == null) return;
     try {
-      console.log("Unloaded");
+      // console.log("Unloaded");
       await shortRef.current.unloadAsync();
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
   };
 
@@ -125,14 +125,14 @@ const ShortSingle = forwardRef(({ item }, ref) => {
         fadeInOut(pauseOpacity);
         await shortRef.current.pauseAsync();
       } catch (e) {
-        console.log(e);
+        // console.log(e);
       }
     } else {
       try {
         fadeInOut(playOpacity);
         await shortRef.current.playAsync();
       } catch (e) {
-        console.log(e);
+        // console.log(e);
       }
     }
   };
@@ -147,7 +147,7 @@ const ShortSingle = forwardRef(({ item }, ref) => {
       res = await upvote(short._id, user_token);
     }
     if (res) {
-      console.log(res);
+      // console.log(res);
       let newShort = await getShort(short._id, user_token);
       setShort(newShort);
       setUpState(newShort.userUpvoted);
@@ -165,7 +165,7 @@ const ShortSingle = forwardRef(({ item }, ref) => {
       res = await downvote(short._id, user_token);
     }
     if (res) {
-      console.log(res);
+      // console.log(res);
       let newShort = await getShort(short._id, user_token);
       setShort(newShort);
       setDownState(newShort.userDownvoted);

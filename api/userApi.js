@@ -4,7 +4,7 @@ import { shallow } from "zustand/shallow";
 import { useUserStore } from "../store";
 
 export const login = async (email, password, setUser) => {
-  console.log("debug", email, password);
+  // console.log("debug", email, password);
   try {
     const response = await api.post(`/auth/login`, {
       email,
@@ -24,7 +24,7 @@ export const login = async (email, password, setUser) => {
 };
 
 export const register = async (name, email, password, dob, setUser) => {
-  console.log("debug", name, email, password, dob);
+  // console.log("debug", name, email, password, dob);
   try {
     const response = await api.post(`/auth/register`, {
       name,
@@ -32,7 +32,7 @@ export const register = async (name, email, password, dob, setUser) => {
       password,
       dob
     });
-    console.log("debug", response.data);
+    // console.log("debug", response.data);
     await AsyncStorage.setItem("user", JSON.stringify(response.data));
     await AsyncStorage.setItem("token", JSON.stringify(response.data?.token));
     const user = response.data;
@@ -64,7 +64,7 @@ export const checkAuthLogged = async () => {
       const [setUser] = useUserStore((state) => [state.setUser], shallow);
       setUser(user);
     } else {
-      console.log("no user");
+      // console.log("no user");
     }
   } catch (error) {
     console.error(error);

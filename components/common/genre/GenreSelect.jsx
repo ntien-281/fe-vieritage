@@ -25,7 +25,7 @@ const GenreSelect = () => {
       setIsLoading(true);
       const data = await getAllGenres(user_token);
       if (data) {
-        console.log(data);
+        // console.log(data);
         setIsLoading(false);
         setGenres(data);
       } else {
@@ -36,7 +36,7 @@ const GenreSelect = () => {
     fetch();
   }, []);
 
-  console.log(selectedGenres);
+  // console.log(selectedGenres);
 
   return (
     <View className="mt-1">

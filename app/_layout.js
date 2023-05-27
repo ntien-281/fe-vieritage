@@ -8,7 +8,7 @@ import { usePathname } from "expo-router";
 
 const Layout = () => {
   const pathname = usePathname();
-  console.log(pathname);
+  // console.log(pathname);
   return (
     // Setup the auth context and render our layout inside of it.
     <Provider>
