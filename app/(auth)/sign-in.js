@@ -15,7 +15,7 @@ const SignIn = () => {
   const [user, setUser] = useUserStore((state) => [state.user, state.setUser], shallow);
 
   console.log('UserSignIn',user);
-  if(user) {
+  if(user?.user?.name) {
     signIn()
   }
 

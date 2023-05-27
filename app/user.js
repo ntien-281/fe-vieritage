@@ -11,10 +11,9 @@ const User = () => {
     (state) => [state.user, state.setUser],
     shallow
   );
-  console.log(user);
   const handleSignOut = () => {
     logout();
-    setUser(null);
+    setUser({user: {}});
     signOut();
   };
   return (
