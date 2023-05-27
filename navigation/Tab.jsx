@@ -1,6 +1,8 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Map from "../screens/map";
+import Short from "../screens/short";
+import ShortNav from "./shortNav";
 import UserScreen from "../screens/UserScreen";
 import {
   MaterialCommunityIcons,
@@ -29,10 +31,10 @@ export default function Tab() {
       }}
     >
       <mTab.Screen
-        name="Short"
-        component={Map}
+        name="ShortNav"
+        component={ShortNav}
         options={{
-          tabBarLabel: "Post",
+          tabBarLabel: "ShortNav",
           tabBarIcon: ({ color, size }) => (
             <Entypo name="video" size={24} color="black" />
           ),
