@@ -5,6 +5,7 @@ import { ActivityIndicator } from "react-native-paper";
 import styles from "./feed.styles";
 import ShortSingle from "../video/ShortSingle";
 
+<<<<<<< HEAD
 import { getAllShortsOfUser } from "../../../../api/short";
 import { useUserStore } from "../../../../store";
 const USER_DEV_ID = "646ef3637251a0220e25132a";
@@ -14,12 +15,29 @@ const Feed = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(false);
   const user = useUserStore((state) => state.user);
+=======
+import { getVerifiedShorts } from "../../../../api/short";
+import { useUserStore } from "../../../../store";
+
+const USER_ID = "646ef3637251a0220e25132a";
+
+const Feed = () => {
+  const user = useUserStore((state) => state.user);
+
+  const [shortOfUser, setShortOfUser] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(false);
+  const [recommId, setRecommId] = useState("");
+
+>>>>>>> main
   useEffect(() => {
     const fetch = async () => {
       setIsLoading(true);
-      const res = await getAllShortsOfUser(USER_DEV_ID);
+      const res = await getVerifiedShorts(user?.token);
       if (res) {
-        setShortOfUser(res);
+        console.log(res);
+        setShortOfUser(res.data);
+        setRecommId(res.recommId);
         setIsLoading(false);
         setError(false);
       } else {
@@ -43,6 +61,8 @@ const Feed = () => {
       }
     });
   });
+
+  console.log(shortOfUser);
 
   return (
     <View style={styles.container}>

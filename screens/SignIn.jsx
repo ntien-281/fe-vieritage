@@ -5,6 +5,7 @@ import { TextInput, Button } from "react-native-paper";
 import { login } from "../api/userApi";
 import { shallow } from "zustand/shallow";
 import { useUserStore } from "../store/index";
+import { Pressable } from "react-native";
 
 const SignIn = ({ navigation }) => {
   const [email, setEmail] = useState("");
@@ -14,8 +15,11 @@ const SignIn = ({ navigation }) => {
     (state) => [state.user, state.setUser],
     shallow
   );
+<<<<<<< HEAD:screens/SignIn.js
   console.log(user?.token);
   console.log(email, password);
+=======
+>>>>>>> main:screens/SignIn.jsx
   if (user?.token) {
     navigation.navigate("Map");
   }
@@ -26,10 +30,6 @@ const SignIn = ({ navigation }) => {
           Sign In
         </Text>
         <TextInput
-          // value={formData.email}
-          // onChangeText = {email => setEmail(email)}
-
-          // onChangeText={(text) => handleChangeEmail(text)}
           onChangeText={(text) => setEmail(text)}
           className="mt-[8px] rounded-[10px] py-[6px]"
           theme={{ roundness: 10 }}
@@ -40,9 +40,6 @@ const SignIn = ({ navigation }) => {
           placeholder="Enter Your Email"
         />
         <TextInput
-          // value={formData.password}
-          // onChangeText={(text) => handleChangePassword(text)}
-          // label="password"
           onChangeText={(text) => setPassword(text)}
           secureTextEntry={true}
           className="mt-[24px] rounded-[10px] py-[6px]"
@@ -55,23 +52,22 @@ const SignIn = ({ navigation }) => {
         />
         <View className="mt-[16px] flex flex-row items-center justify-end">
           <TouchableOpacity
-          // onPress={() => {
-          //   navigation.navigate("ForgotPassword");
-          // }}
           >
             <Text className="text-[16px] text-[#969393] underline">
               Forget Password?
             </Text>
           </TouchableOpacity>
         </View>
-
         <TouchableOpacity>
           <Button
-            // icon="camera"
             mode="contained"
             compact={true}
+<<<<<<< HEAD:screens/SignIn.js
             className="mt-[36px] rounded-[10px] bg-[#acbcff] py-[10px]"
             // onPress={handleSignIn}
+=======
+            className="mt-[36px] rounded-[10px] bg-[#A0D8B3] py-[10px]"
+>>>>>>> main:screens/SignIn.jsx
             onPress={() => {
               login(email, password, setUser);
             }}
@@ -79,6 +75,7 @@ const SignIn = ({ navigation }) => {
             <Text className="my-0 text-[20px] font-[700]">&nbsp; Sign In</Text>
           </Button>
         </TouchableOpacity>
+<<<<<<< HEAD:screens/SignIn.js
         <Text className="mt-[160px] flex-row items-center justify-center text-center text-[16px]">
           <Text>Don{"'"}t have an account? </Text>
           <TouchableOpacity
@@ -86,8 +83,21 @@ const SignIn = ({ navigation }) => {
             className="flex-row items-center justify-center"
           >
             <Text className="font-[700]">Sign Up</Text>
+=======
+        <View className="mt-[160px] flex flex-row items-center justify-center text-center">
+          <Text className="text-[16px]">Don{"'"}t have an account? </Text>
+          <TouchableOpacity>
+            <Text
+              className="font-[700]"
+              onPress={() => {
+                navigation.navigate("SignUp");
+              }}
+            >
+              Sign Up
+            </Text>
+>>>>>>> main:screens/SignIn.jsx
           </TouchableOpacity>
-        </Text>
+        </View>
       </View>
     </SafeAreaView>
   );

@@ -19,13 +19,16 @@ import {
   downvote,
   getShort,
 } from "../../../../api/short";
-import { useCurrentTab } from "../../../../store";
+import { useCurrentTab, useUserStore } from "../../../../store";
 import { formatCompactNumber } from "../../../../utils";
 
 const ShortSingle = forwardRef(({ item }, ref) => {
   const [short, setShort] = useState(item);
   const [upState, setUpState] = useState(short.userUpvoted);
   const [downState, setDownState] = useState(short.userDownvoted);
+
+  const user = useUserStore((state) => state.user);
+  const user_token = user?.token;
 
   const shortRef = useRef(null);
   const [lastView, setLastView] = useState(false);
@@ -138,14 +141,14 @@ const ShortSingle = forwardRef(({ item }, ref) => {
     let res;
     if (short.userUpvoted) {
       setUpState(false);
-      res = await disupvote(short._id);
+      res = await disupvote(short._id, user_token);
     } else {
       setUpState(true);
-      res = await upvote(short._id);
+      res = await upvote(short._id, user_token);
     }
     if (res) {
       console.log(res);
-      let newShort = await getShort(short._id);
+      let newShort = await getShort(short._id, user_token);
       setShort(newShort);
       setUpState(newShort.userUpvoted);
       setDownState(newShort.userDownvoted);
@@ -156,14 +159,14 @@ const ShortSingle = forwardRef(({ item }, ref) => {
     let res;
     if (short.userDownvoted) {
       setDownState(false);
-      res = await disdownvote(short._id);
+      res = await disdownvote(short._id, user_token);
     } else {
       setDownState(true);
-      res = await downvote(short._id);
+      res = await downvote(short._id, user_token);
     }
     if (res) {
       console.log(res);
-      let newShort = await getShort(short._id);
+      let newShort = await getShort(short._id, user_token);
       setShort(newShort);
       setDownState(newShort.userDownvoted);
       setUpState(newShort.userUpvoted);
@@ -173,9 +176,7 @@ const ShortSingle = forwardRef(({ item }, ref) => {
   const SingleTap = Gesture.Tap().maxDuration(200).onTouchesUp(handleTap);
   const DoubleTap = Gesture.Tap()
     .maxDuration(200)
-    .onTouchesUp(() => {
-      
-    });
+    .onTouchesUp(() => {});
 
   return (
     <>
@@ -183,7 +184,7 @@ const ShortSingle = forwardRef(({ item }, ref) => {
         className=""
         gesture={Gesture.Exclusive(DoubleTap, SingleTap)}
       >
-        <View className="bg-transparent absolute bottom-0 left-0 top-0 right-0 z-10 flex items-center justify-center">
+        <View className="absolute bottom-0 left-0 right-0 top-0 z-10 flex items-center justify-center bg-transparent">
           <View className="absolute">
             <IconButton
               icon="play-circle"
@@ -217,9 +218,16 @@ const ShortSingle = forwardRef(({ item }, ref) => {
         }}
       />
 
-      <View className="absolute bottom-5 w-2/3 left-3 z-20">
+      <View className="absolute bottom-5 left-3 z-20 w-2/3">
         <View className="w-1/3">
-          <Avatar.Image source={{ uri: short.createdUser.avatar || "https://png.pngtree.com/png-vector/20210604/ourmid/pngtree-gray-avatar-placeholder-png-image_3416697.jpg" }} size={60} />
+          <Avatar.Image
+            source={{
+              uri:
+                short.createdUser.avatar ||
+                "https://png.pngtree.com/png-vector/20210604/ourmid/pngtree-gray-avatar-placeholder-png-image_3416697.jpg",
+            }}
+            size={60}
+          />
           <Text variant="titleMedium" className="text-white">
             {short.createdUser.name}
           </Text>
@@ -231,7 +239,7 @@ const ShortSingle = forwardRef(({ item }, ref) => {
         </View>
       </View>
 
-      <View className="absolute flex flex-col justify-around bottom-0 right-0 z-20 mb-3">
+      <View className="absolute bottom-0 right-0 z-20 mb-3 flex flex-col justify-around">
         <TouchableOpacity style={styles.iconButton} onPress={handleUpvote}>
           <IconButton
             size={36}
@@ -239,7 +247,9 @@ const ShortSingle = forwardRef(({ item }, ref) => {
             icon={upState ? "arrow-up-bold" : "arrow-up-bold-outline"}
             animated
           />
-          <Text variant="labelLarge" className="text-white">{formatCompactNumber(short.upvotes.length)}</Text>
+          <Text variant="labelLarge" className="text-white">
+            {formatCompactNumber(short.upvotes.length)}
+          </Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.iconButton} onPress={handleDownvote}>
           <IconButton
@@ -248,7 +258,9 @@ const ShortSingle = forwardRef(({ item }, ref) => {
             icon={downState ? "arrow-down-bold" : "arrow-down-bold-outline"}
             animated
           />
-          <Text variant="labelLarge" className="text-white">{formatCompactNumber(short.downvotes.length)}</Text>
+          <Text variant="labelLarge" className="text-white">
+            {formatCompactNumber(short.downvotes.length)}
+          </Text>
         </TouchableOpacity>
       </View>
     </>
