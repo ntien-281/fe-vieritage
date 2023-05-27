@@ -1,27 +1,24 @@
 import React, { useEffect, useState } from "react";
 import { useAuth } from "../../context/auth";
 import { Link } from "expo-router";
-import {
-  SafeAreaView,
-  Text,
-  View,
-  TouchableOpacity,
-} from "react-native";
+import { SafeAreaView, Text, View, TouchableOpacity } from "react-native";
 import { TextInput, Button } from "react-native-paper";
-import {login} from "../../api/userApi"
-import useUserStore from "../../store/index"
-import { shallow } from 'zustand/shallow'
+import { login } from "../../api/userApi";
+import { shallow } from "zustand/shallow";
+import { useUserStore } from "../../store/index";
 
 const SignIn = () => {
   const { signIn } = useAuth();
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [showPwd, setShowPwd] = useState(false)
-  // const [setUser] = useUserStore((state) => [state.setUser], shallow)  
-  // const handleSignIn = () => {
-  //   login(email, password)
-  // }
-  console.log(email, password);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [showPwd, setShowPwd] = useState(false);
+  const [user, setUser] = useUserStore((state) => [state.user, state.setUser], shallow);
+
+  console.log('UserSignIn',user);
+  if(user) {
+    signIn()
+  }
+
   return (
     <SafeAreaView className="flex-1 px-[20px] pt-[25px] mb-[25px]">
       <View>
@@ -62,7 +59,9 @@ const SignIn = () => {
           //   navigation.navigate("ForgotPassword");
           // }}
           >
-            <Text className="text-[#969393] text-[16px] underline">Forget Password?</Text>
+            <Text className="text-[#969393] text-[16px] underline">
+              Forget Password?
+            </Text>
           </TouchableOpacity>
         </View>
 
@@ -73,9 +72,10 @@ const SignIn = () => {
             compact={true}
             className="rounded-[10px] py-[10px] bg-[#acbcff] mt-[36px]"
             // onPress={handleSignIn}
-            onPress={() => {login(email, password)}}
+            onPress={() => {
+              login(email, password, setUser);
+            }}
           >
-            {/* <Image source={require("../assets/icons/telegram_icon.png")} /> */}
             <Text className="text-[20px] font-[700] my-0">&nbsp; Sign In</Text>
           </Button>
         </TouchableOpacity>
@@ -83,11 +83,7 @@ const SignIn = () => {
           Don't have an account?
           <Text> </Text>
           <Link href="/SignUp">
-            <Text
-              className="font-[700]"
-            >
-              Sign Up
-            </Text>
+            <Text className="font-[700]">Sign Up</Text>
           </Link>
         </Text>
       </View>

@@ -1,6 +1,7 @@
 import { useRouter, useSegments, usePathname } from "expo-router";
 import React from "react";
 
+
 const AuthContext = React.createContext(null);
 
 // This hook can be used to access the user info.
@@ -13,7 +14,6 @@ function useProtectedRoute(user) {
   const segments = useSegments();
   const router = useRouter();
   const pathname = usePathname();
-
   React.useEffect(() => {
     const inAuthGroup = segments[0] === "(auth)";
     if (pathname === "/sign-up") {
