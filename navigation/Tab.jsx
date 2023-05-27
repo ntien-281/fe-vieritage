@@ -35,7 +35,7 @@ export default function Tab() {
         options={{
           tabBarLabel: "ShortNav",
           tabBarIcon: ({ color, size }) => (
-            <Entypo name="video" size={24} color="black" />
+            <AntDesign name="videocamera" size={24} color="black" />
           ),
         }}
       />

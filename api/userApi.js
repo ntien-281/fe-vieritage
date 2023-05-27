@@ -10,14 +10,13 @@ export const login = async (email, password, setUser) => {
       email,
       password,
     });
-    console.log("debug", response.data);
     await AsyncStorage.setItem("user", JSON.stringify(response.data));
     await AsyncStorage.setItem("token", JSON.stringify(response.data?.token));
     const user = response.data;
-    if(user){
+    if (user) {
       setUser(user)
     }
-    
+
   } catch (error) {
     // Xử lý lỗi đăng nhập
     console.error({ ...error });
@@ -25,7 +24,7 @@ export const login = async (email, password, setUser) => {
 };
 
 export const register = async (name, email, password, dob, setUser) => {
-  console.log("debug",name, email, password, dob);
+  console.log("debug", name, email, password, dob);
   try {
     const response = await api.post(`/auth/register`, {
       name,
@@ -37,7 +36,7 @@ export const register = async (name, email, password, dob, setUser) => {
     await AsyncStorage.setItem("user", JSON.stringify(response.data));
     await AsyncStorage.setItem("token", JSON.stringify(response.data?.token));
     const user = response.data;
-    if(user){
+    if (user) {
       setUser(user);
     }
   } catch (error) {
@@ -68,6 +67,28 @@ export const checkAuthLogged = async () => {
       console.log("no user");
     }
   } catch (error) {
+    console.error(error);
+  }
+};
+
+
+export const getCurrentUser = async (token, setUserDetail) => {
+  try {
+    const response = await api.get(`user/me`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+    });
+
+    // Xử lý dữ liệu trả về tại đây
+    const userDetail = response.data;
+    if(userDetail) {
+      setUserDetail(userDetail)
+    }
+
+  } catch (error) {
+    // Xử lý lỗi tại đây
     console.error(error);
   }
 };
