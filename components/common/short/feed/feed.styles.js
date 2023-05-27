@@ -11,6 +11,13 @@ const styles = StyleSheet.create({
     flex: 1, 
     backgroundColor: "black",
     height: Dimensions.get('window').height - BOTTOM_APPBAR_HEIGHT - 4
+  },
+  errorContainer: {
+    height: Dimensions.get('window').height - BOTTOM_APPBAR_HEIGHT - 4,
+    backgroundColor: 'black',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
   }
 })
 

@@ -11,9 +11,8 @@ const short = axios.create({
 });
 short.defaults.headers.common["Accept"] = "application/json";
 
-const getAllShortsOfUser = async (user_id) => {
+const getAllShortsOfUser = async (user_id, user_token) => {
   let res;
-  const user_token = await AsyncStorage.getItem("token");
   try {
     res = await short.request({
       method: "GET",
@@ -24,7 +23,7 @@ const getAllShortsOfUser = async (user_id) => {
         Authorization: "Bearer " + user_token,
       },
     });
-    return res.data;
+    return res.data.data;
   } catch (error) {
     console.log(error);
   }
@@ -46,7 +45,7 @@ const getVerifiedShorts = async (user_token) => {
     });
     console.log("Tr");
 
-    return res.data;
+    return res.data.data;
   } catch (error) {
     console.log(error);
   }

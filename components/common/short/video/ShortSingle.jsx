@@ -178,6 +178,9 @@ const ShortSingle = forwardRef(({ item }, ref) => {
     .maxDuration(200)
     .onTouchesUp(() => {});
 
+  const genresNameArray = short.queryGenres.map((item) => item.name);
+  const GenresString = genresNameArray.join(', ');
+
   return (
     <>
       <GestureDetector
@@ -235,6 +238,11 @@ const ShortSingle = forwardRef(({ item }, ref) => {
         <View>
           <Text variant="bodyMedium" className="text-white" numberOfLines={2}>
             {short?.description || "Video không có chú thích"}
+          </Text>
+        </View>
+        <View>
+          <Text variant="titleMedium" className="text-white" numberOfLines={1}>
+            Thể loại: {GenresString} 
           </Text>
         </View>
       </View>

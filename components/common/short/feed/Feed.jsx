@@ -1,11 +1,11 @@
-import { View, Text, FlatList } from "react-native";
+import { View, FlatList } from "react-native";
 import React, { useRef, useState, useEffect } from "react";
-import { ActivityIndicator } from "react-native-paper";
+import { ActivityIndicator, Text } from "react-native-paper";
 
 import styles from "./feed.styles";
 import ShortSingle from "../video/ShortSingle";
 
-import { getVerifiedShorts } from "../../../../api/short";
+import { getAllShortsOfUser, getVerifiedShorts } from "../../../../api/short";
 import { useUserStore } from "../../../../store";
 
 const USER_ID = "646ef3637251a0220e25132a";
@@ -21,10 +21,11 @@ const Feed = () => {
   useEffect(() => {
     const fetch = async () => {
       setIsLoading(true);
-      const res = await getVerifiedShorts(user?.token);
+      const res = await getAllShortsOfUser(USER_ID, user?.token);
+      // const res = await getVerifiedShorts(user?.token);
       if (res) {
         console.log(res);
-        setShortOfUser(res.data);
+        setShortOfUser(res);
         setRecommId(res.recommId);
         setIsLoading(false);
         setError(false);
@@ -64,10 +65,10 @@ const Feed = () => {
           />
         </View>
       ) : error ? (
-        <View className="flex items-center justify-center" style={styles.short}>
-          <Text className="text-2xl text-white">Có lỗi xảy ra.</Text>
+        <View className="flex items-center justify-center" style={styles.errorContainer}>
+          <Text variant="titleMedium" className="text-white">Có lỗi xảy ra.</Text>
         </View>
-      ) : (
+      ) : shortOfUser.length ? (
         <FlatList
           showsVerticalScrollIndicator={false}
           showsHorizontalScrollIndicator={false}
@@ -96,6 +97,12 @@ const Feed = () => {
           decelerationRate={"normal"}
           onViewableItemsChanged={onViewableItemsChanged.current}
         />
+      ) : (
+        <View style={styles.errorContainer}>
+          <Text variant="titleMedium" className="text-white">
+            Không có video nào
+          </Text>
+        </View>
       )}
     </View>
   );
