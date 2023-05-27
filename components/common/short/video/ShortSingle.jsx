@@ -1,6 +1,6 @@
 import React, { forwardRef, useEffect, useImperativeHandle, useMemo, useRef, useState } from 'react'
 import { Video } from 'expo-av'
-import { Avatar, IconButton, Text } from 'react-native-paper'
+import { Avatar, Button, IconButton, Text } from 'react-native-paper'
 import { Animated, View, TouchableOpacity } from 'react-native'
 import { Gesture, GestureDetector } from 'react-native-gesture-handler'
 
@@ -9,15 +9,18 @@ import styles from './shortsingle.styles'
 import { upvote, disupvote, disdownvote, downvote, getShort } from '../../../../api/short'
 import { useCurrentTab, useUserStore } from '../../../../store'
 import { formatCompactNumber } from '../../../../utils'
+import axios from 'axios'
+import { BASE_URL } from '../../../../config'
 
 const ShortSingle = forwardRef(({ item }, ref) => {
   const [short, setShort] = useState(item)
   const [upState, setUpState] = useState(short.userUpvoted)
   const [downState, setDownState] = useState(short.userDownvoted)
   const genresArray = useMemo(() => {
-    const temp = short.queryGenres.map((item) => item.name)
+    const temp = short?.queryGenres?.map((item) => item.name)
     return temp
   }, [])
+  const [scrutinized, setScrutinized] = useState(false)
 
   const user = useUserStore((state) => state.user)
   const user_token = user?.token
@@ -172,6 +175,25 @@ const ShortSingle = forwardRef(({ item }, ref) => {
 
   const GenresString = genresArray?.join(', ')
 
+  const scrutinize = async (value) => {
+    try {
+      await axios.post(
+        BASE_URL + '/shorts/scrutinize/' + item._id,
+        {
+          action: value,
+        },
+        {
+          headers: {
+            Authorization: 'Bearer ' + user.token,
+          },
+        }
+      )
+      setScrutinized(true)
+    } catch (error) {
+      console.log('SCRUTINIZE ERROR')
+    }
+  }
+
   return (
     <>
       <GestureDetector className='' gesture={Gesture.Exclusive(DoubleTap, SingleTap)}>
@@ -238,27 +260,45 @@ const ShortSingle = forwardRef(({ item }, ref) => {
             Lượt xem: {short.views.length}
           </Text>
         </View>
+        {item && item.scrutinizing === true && scrutinized === false && (
+          <View className='h-10 w-full flex-row'>
+            <Button onPress={() => scrutinize('accept')} mode='contained' className='flex-1' buttonColor='#A0D8B3'>
+              <Text>Phê duyệt</Text>
+            </Button>
+            <View className='w-2' />
+            <Button onPress={() => scrutinize('refuse')} mode='contained' className='flex-1' buttonColor='#A0D8B3'>
+              <Text>Từ chối</Text>
+            </Button>
+          </View>
+        )}
       </View>
 
-      <View className='absolute bottom-0 right-0 z-20 mb-3 flex flex-col justify-around'>
-        <TouchableOpacity style={styles.iconButton} onPress={handleUpvote}>
-          <IconButton size={36} iconColor='white' icon={upState ? 'arrow-up-bold' : 'arrow-up-bold-outline'} animated />
-          <Text variant='labelLarge' className='text-white'>
-            {formatCompactNumber(short.upvotes.length)}
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.iconButton} onPress={handleDownvote}>
-          <IconButton
-            size={36}
-            iconColor='white'
-            icon={downState ? 'arrow-down-bold' : 'arrow-down-bold-outline'}
-            animated
-          />
-          <Text variant='labelLarge' className='text-white'>
-            {formatCompactNumber(short.downvotes.length)}
-          </Text>
-        </TouchableOpacity>
-      </View>
+      {item && !item.scrutinizing && (
+        <View className='absolute bottom-0 right-0 z-20 mb-3 flex flex-col justify-around'>
+          <TouchableOpacity style={styles.iconButton} onPress={handleUpvote}>
+            <IconButton
+              size={36}
+              iconColor='white'
+              icon={upState ? 'arrow-up-bold' : 'arrow-up-bold-outline'}
+              animated
+            />
+            <Text variant='labelLarge' className='text-white'>
+              {formatCompactNumber(short.upvotes.length)}
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.iconButton} onPress={handleDownvote}>
+            <IconButton
+              size={36}
+              iconColor='white'
+              icon={downState ? 'arrow-down-bold' : 'arrow-down-bold-outline'}
+              animated
+            />
+            <Text variant='labelLarge' className='text-white'>
+              {formatCompactNumber(short.downvotes.length)}
+            </Text>
+          </TouchableOpacity>
+        </View>
+      )}
     </>
   )
 })
